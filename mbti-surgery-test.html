@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>숨겨진 뷰티 본능 테스트 - 강남에서 통하는 그 답</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            overflow: hidden;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            border-bottom: 3px solid #e8e8e8;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.85;
+            line-height: 1.6;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 50px 40px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Hero (Start Screen) */
+        .content.hero-mode {
+            padding: 0;
+            min-height: 0;
+            display: block;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 640px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(4,6,15,0.40) 0%, rgba(4,6,15,0.30) 45%, rgba(4,6,15,0.76) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 60px 40px;
+            text-align: center;
+            color: #fff;
+            max-width: 560px;
+        }
+
+        .hero-kicker {
+            font-size: 11px;
+            letter-spacing: 5px;
+            color: #ffd98a;
+            font-weight: 600;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+        }
+
+        .hero-content h1 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.6);
+        }
+
+        .hero-content .hook {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+        }
+
+        .hero-content .sub {
+            font-size: 14px;
+            line-height: 1.9;
+            color: rgba(255,255,255,0.92);
+            margin-bottom: 26px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+        }
+
+        .hero-features {
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.22);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 18px 24px;
+            font-size: 13.5px;
+            line-height: 2.1;
+            text-align: left;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .btn-hero {
+            background: #fff;
+            color: #111;
+            padding: 16px 44px;
+            border-radius: 30px;
+            font-weight: 700;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255,255,255,0.25);
+        }
+
+        .hero-eng {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.55);
+            margin-top: 16px;
+        }
+
+        /* Start Screen */
+        .start-screen h2 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+            text-align: center;
+        }
+
+        .start-screen p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .start-screen .features {
+            background: #f8f8f8;
+            border-left: 4px solid #1a1a1a;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        /* Questions Screen */
+        .question-screen h2 {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: #e8e8e8;
+            height: 6px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress {
+            background: #1a1a1a;
+            height: 100%;
+            transition: width 0.4s ease;
+            border-radius: 10px;
+        }
+
+        .question-number {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            border: 2px solid #e0e0e0;
+            padding: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+            position: relative;
+            text-align: left;
+        }
+
+        .option:hover {
+            border-color: #1a1a1a;
+            background: #f8f8f8;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #1a1a1a;
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .option input[type="radio"] {
+            display: none;
+        }
+
+        /* Results Screen */
+        .result-screen {
+            text-align: center;
+        }
+
+        .result-screen .title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .result-badge {
+            display: inline-block;
+            background: #1a1a1a;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-content {
+            background: #f8f8f8;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #1a1a1a;
+            text-align: left;
+        }
+
+        .result-content h3 {
+            font-size: 18px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .result-content p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .hospital-info {
+            background: white;
+            border: 2px solid #1a1a1a;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .hospital-info .hospital-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .hospital-info .hospital-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            color: white;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .btn-primary:hover {
+            background: #3a3a3a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(26, 26, 26, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1a1a1a;
+            border: 2px solid #1a1a1a;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f8f8;
+        }
+
+        .btn-restart {
+            background: #1a1a1a;
+            color: white;
+            min-width: 150px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f8f8f8;
+            padding: 20px 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero {
+                min-height: 580px;
+            }
+
+            .hero-content {
+                padding: 45px 24px;
+            }
+
+            .hero-content h1 {
+                font-size: 26px;
+            }
+
+            .hero-content .hook {
+                font-size: 15px;
+            }
+
+            .header {
+                padding: 40px 25px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 35px 25px;
+            }
+
+            .option {
+                padding: 15px;
+                font-size: 14px;
+            }
+
+            .result-screen .title {
+                font-size: 24px;
+            }
+
+            .hospital-info .hospital-name {
+                font-size: 18px;
+            }
+
+            button {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header hidden" id="mainHeader">
+            <h1>숨겨진 뷰티 본능 테스트</h1>
+            <p>1분 만에 밝혀지는 당신의 진짜 뷰티 타입 — 그리고 강남에서 통하는 단 하나의 답</p>
+        </div>
+
+        <div class="content hero-mode" id="mainContent">
+            <!-- Start Screen (Hero: 한강 야경) -->
+            <div id="startScreen" class="start-screen hero">
+                <svg class="hero-bg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <defs>
+                        <linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#04060f"/>
+                            <stop offset="45%" stop-color="#0b1030"/>
+                            <stop offset="78%" stop-color="#241a45"/>
+                            <stop offset="100%" stop-color="#3a2a52"/>
+                        </linearGradient>
+                        <linearGradient id="rivG" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#131740"/>
+                            <stop offset="35%" stop-color="#0a0e28"/>
+                            <stop offset="100%" stop-color="#04060f"/>
+                        </linearGradient>
+                        <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#e0b060"/>
+                            <stop offset="100%" stop-color="#7a5220"/>
+                        </linearGradient>
+                        <radialGradient id="moonGlow">
+                            <stop offset="0%" stop-color="rgba(255,250,230,0.55)"/>
+                            <stop offset="100%" stop-color="rgba(255,250,230,0)"/>
+                        </radialGradient>
+                        <radialGradient id="cityGlow">
+                            <stop offset="0%" stop-color="rgba(255,160,110,0.30)"/>
+                            <stop offset="100%" stop-color="rgba(255,160,110,0)"/>
+                        </radialGradient>
+                        <pattern id="winA" width="16" height="20" patternUnits="userSpaceOnUse">
+                            <rect x="4" y="6" width="4" height="7" fill="#ffd98a"/>
+                        </pattern>
+                        <pattern id="winB" width="14" height="16" patternUnits="userSpaceOnUse">
+                            <rect x="3" y="4" width="3" height="6" fill="#9fd8ff"/>
+                        </pattern>
+                        <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+                        <filter id="blur6"><feGaussianBlur stdDeviation="6"/></filter>
+                        <filter id="blur12"><feGaussianBlur stdDeviation="12"/></filter>
+                        <filter id="glow"><feGaussianBlur stdDeviation="2.6"/></filter>
+                    </defs>
+
+                    <!-- 하늘 -->
+                    <rect x="0" y="0" width="1600" height="660" fill="url(#skyG)"/>
+                    <!-- 별 -->
+                    <g fill="#ffffff">
+                        <circle cx="90" cy="80" r="1.4" opacity="0.8"/><circle cx="210" cy="150" r="1" opacity="0.5"/>
+                        <circle cx="330" cy="60" r="1.6" opacity="0.9"/><circle cx="420" cy="190" r="1" opacity="0.4"/>
+                        <circle cx="520" cy="110" r="1.3" opacity="0.7"/><circle cx="610" cy="50" r="1" opacity="0.5"/>
+                        <circle cx="700" cy="160" r="1.5" opacity="0.8"/><circle cx="800" cy="90" r="1" opacity="0.5"/>
+                        <circle cx="880" cy="200" r="1.2" opacity="0.6"/><circle cx="960" cy="60" r="1.5" opacity="0.85"/>
+                        <circle cx="1050" cy="130" r="1" opacity="0.5"/><circle cx="1130" cy="70" r="1.3" opacity="0.7"/>
+                        <circle cx="1380" cy="90" r="1.2" opacity="0.6"/><circle cx="1470" cy="180" r="1.5" opacity="0.8"/>
+                        <circle cx="1540" cy="60" r="1" opacity="0.5"/><circle cx="160" cy="250" r="1" opacity="0.4"/>
+                        <circle cx="470" cy="280" r="1.1" opacity="0.45"/><circle cx="740" cy="260" r="1" opacity="0.4"/>
+                        <circle cx="1330" cy="240" r="1.1" opacity="0.5"/><circle cx="1560" cy="200" r="1.2" opacity="0.55"/>
+                    </g>
+                    <!-- 달 -->
+                    <circle cx="1250" cy="140" r="95" fill="url(#moonGlow)"/>
+                    <circle cx="1250" cy="140" r="40" fill="#fdf6e3"/>
+                    <!-- 도시 불빛 번짐 -->
+                    <ellipse cx="800" cy="650" rx="920" ry="150" fill="url(#cityGlow)"/>
+
+                    <!-- 남산 + N서울타워 -->
+                    <path d="M880,660 Q1060,455 1240,660 Z" fill="#0b0f22"/>
+                    <rect x="1054" y="350" width="10" height="140" fill="#10162e"/>
+                    <rect x="1036" y="352" width="46" height="8" fill="#ffd98a" opacity="0.9" filter="url(#glow)"/>
+                    <ellipse cx="1059" cy="345" rx="24" ry="13" fill="#141c3a"/>
+                    <line x1="1059" y1="332" x2="1059" y2="285" stroke="#10162e" stroke-width="4"/>
+                    <circle cx="1059" cy="283" r="3.5" fill="#ff4d4d" filter="url(#glow)"/>
+
+                    <!-- 원경 스카이라인 -->
+                    <g fill="#0d1128" opacity="0.6">
+                        <rect x="40" y="480" width="60" height="180"/><rect x="150" y="510" width="50" height="150"/>
+                        <rect x="430" y="470" width="55" height="190"/><rect x="600" y="500" width="45" height="160"/>
+                        <rect x="760" y="480" width="60" height="180"/><rect x="1120" y="500" width="55" height="160"/>
+                        <rect x="1270" y="470" width="50" height="190"/><rect x="1460" y="510" width="60" height="150"/>
+                    </g>
+
+                    <!-- 메인 스카이라인 -->
+                    <g>
+                        <rect x="0" y="230" width="90" height="430" fill="#12173a"/><rect x="0" y="230" width="90" height="430" fill="url(#winA)" opacity="0.5"/>
+                        <rect x="95" y="280" width="70" height="380" fill="#171c38"/><rect x="95" y="280" width="70" height="380" fill="url(#winB)" opacity="0.5"/>
+                        <rect x="170" y="360" width="60" height="300" fill="#12173a"/><rect x="170" y="360" width="60" height="300" fill="url(#winA)" opacity="0.45"/>
+                        <!-- 63빌딩 -->
+                        <rect x="238" y="190" width="78" height="470" fill="url(#goldG)" opacity="0.85"/>
+                        <rect x="238" y="190" width="78" height="470" fill="url(#winA)" opacity="0.3"/>
+                        <rect x="322" y="310" width="55" height="350" fill="#171c38"/><rect x="322" y="310" width="55" height="350" fill="url(#winB)" opacity="0.5"/>
+                        <rect x="382" y="250" width="90" height="410" fill="#12173a"/><rect x="382" y="250" width="90" height="410" fill="url(#winA)" opacity="0.5"/>
+                        <rect x="477" y="380" width="65" height="280" fill="#171c38"/><rect x="477" y="380" width="65" height="280" fill="url(#winB)" opacity="0.45"/>
+                        <rect x="547" y="220" width="85" height="440" fill="#12173a"/><rect x="547" y="220" width="85" height="440" fill="url(#winA)" opacity="0.5"/>
+                        <rect x="637" y="330" width="60" height="330" fill="#171c38"/><rect x="637" y="330" width="60" height="330" fill="url(#winB)" opacity="0.5"/>
+                        <rect x="702" y="280" width="75" height="380" fill="#12173a"/><rect x="702" y="280" width="75" height="380" fill="url(#winA)" opacity="0.45"/>
+                        <rect x="782" y="360" width="55" height="300" fill="#171c38"/><rect x="782" y="360" width="55" height="300" fill="url(#winB)" opacity="0.5"/>
+                        <rect x="842" y="215" width="88" height="445" fill="#12173a"/><rect x="842" y="215" width="88" height="445" fill="url(#winA)" opacity="0.5"/>
+                        <rect x="1180" y="320" width="65" height="340" fill="#171c38"/><rect x="1180" y="320" width="65" height="340" fill="url(#winB)" opacity="0.5"/>
+                        <rect x="1250" y="370" width="55" height="290" fill="#12173a"/><rect x="1250" y="370" width="55" height="290" fill="url(#winA)" opacity="0.45"/>
+                        <!-- 타워형 초고층 -->
+                        <path d="M1310,660 L1322,185 Q1360,170 1398,185 L1410,660 Z" fill="#141a36"/>
+                        <path d="M1310,660 L1322,185 Q1360,170 1398,185 L1410,660 Z" fill="url(#winB)" opacity="0.35"/>
+                        <line x1="1360" y1="178" x2="1360" y2="660" stroke="#2a3560" stroke-width="2"/>
+                        <rect x="1420" y="260" width="80" height="400" fill="#12173a"/><rect x="1420" y="260" width="80" height="400" fill="url(#winA)" opacity="0.5"/>
+                        <rect x="1505" y="330" width="95" height="330" fill="#171c38"/><rect x="1505" y="330" width="95" height="330" fill="url(#winB)" opacity="0.5"/>
+                    </g>
+
+                    <!-- 강 -->
+                    <rect x="0" y="660" width="1600" height="340" fill="url(#rivG)"/>
+
+                    <!-- 반포대교 -->
+                    <g>
+                        <rect x="100" y="720" width="16" height="70" fill="#0b0f26"/>
+                        <rect x="400" y="720" width="16" height="70" fill="#0b0f26"/>
+                        <rect x="700" y="720" width="16" height="70" fill="#0b0f26"/>
+                        <rect x="1000" y="720" width="16" height="70" fill="#0b0f26"/>
+                        <rect x="1300" y="720" width="16" height="70" fill="#0b0f26"/>
+                        <rect x="0" y="700" width="1600" height="12" fill="#0e1330"/>
+                        <line x1="0" y1="700" x2="1600" y2="700" stroke="#232c58" stroke-width="2"/>
+                        <g fill="#ffedb0" filter="url(#glow)">
+                            <circle cx="40" cy="696" r="2.6"/><circle cx="120" cy="696" r="2.6"/><circle cx="200" cy="696" r="2.6"/>
+                            <circle cx="280" cy="696" r="2.6"/><circle cx="360" cy="696" r="2.6"/><circle cx="440" cy="696" r="2.6"/>
+                            <circle cx="520" cy="696" r="2.6"/><circle cx="600" cy="696" r="2.6"/><circle cx="680" cy="696" r="2.6"/>
+                            <circle cx="760" cy="696" r="2.6"/><circle cx="840" cy="696" r="2.6"/><circle cx="920" cy="696" r="2.6"/>
+                            <circle cx="1000" cy="696" r="2.6"/><circle cx="1080" cy="696" r="2.6"/><circle cx="1160" cy="696" r="2.6"/>
+                            <circle cx="1240" cy="696" r="2.6"/><circle cx="1320" cy="696" r="2.6"/><circle cx="1400" cy="696" r="2.6"/>
+                            <circle cx="1480" cy="696" r="2.6"/><circle cx="1560" cy="696" r="2.6"/>
+                        </g>
+                        <!-- 무지개분수 -->
+                        <g stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8" filter="url(#soft)">
+                            <path d="M70,712 q14,36 22,84" stroke="#ff5fa2"/><path d="M145,712 q14,36 22,84" stroke="#7aa8ff"/>
+                            <path d="M220,712 q14,36 22,84" stroke="#54e0c7"/><path d="M295,712 q14,36 22,84" stroke="#ffd166"/>
+                            <path d="M370,712 q14,36 22,84" stroke="#b07aff"/><path d="M445,712 q14,36 22,84" stroke="#ff5fa2"/>
+                            <path d="M520,712 q14,36 22,84" stroke="#7aa8ff"/><path d="M595,712 q14,36 22,84" stroke="#54e0c7"/>
+                            <path d="M670,712 q14,36 22,84" stroke="#ffd166"/><path d="M745,712 q14,36 22,84" stroke="#b07aff"/>
+                            <path d="M820,712 q14,36 22,84" stroke="#ff5fa2"/><path d="M895,712 q14,36 22,84" stroke="#7aa8ff"/>
+                            <path d="M970,712 q14,36 22,84" stroke="#54e0c7"/><path d="M1045,712 q14,36 22,84" stroke="#ffd166"/>
+                            <path d="M1120,712 q14,36 22,84" stroke="#b07aff"/><path d="M1195,712 q14,36 22,84" stroke="#ff5fa2"/>
+                            <path d="M1270,712 q14,36 22,84" stroke="#7aa8ff"/><path d="M1345,712 q14,36 22,84" stroke="#54e0c7"/>
+                            <path d="M1420,712 q14,36 22,84" stroke="#ffd166"/><path d="M1495,712 q14,36 22,84" stroke="#b07aff"/>
+                        </g>
+                    </g>
+
+                    <!-- 물 반영 -->
+                    <g filter="url(#blur6)" opacity="0.85">
+                        <rect x="88" y="810" width="9" height="130" fill="#ff5fa2" opacity="0.30"/>
+                        <rect x="238" y="810" width="9" height="110" fill="#54e0c7" opacity="0.28"/>
+                        <rect x="388" y="810" width="9" height="140" fill="#b07aff" opacity="0.28"/>
+                        <rect x="538" y="810" width="9" height="115" fill="#7aa8ff" opacity="0.30"/>
+                        <rect x="688" y="810" width="9" height="135" fill="#ffd166" opacity="0.28"/>
+                        <rect x="838" y="810" width="9" height="120" fill="#ff5fa2" opacity="0.28"/>
+                        <rect x="988" y="810" width="9" height="140" fill="#54e0c7" opacity="0.30"/>
+                        <rect x="1138" y="810" width="9" height="115" fill="#b07aff" opacity="0.28"/>
+                        <rect x="1288" y="810" width="9" height="130" fill="#7aa8ff" opacity="0.28"/>
+                        <rect x="1438" y="810" width="9" height="120" fill="#ffd166" opacity="0.30"/>
+                        <rect x="270" y="740" width="14" height="230" fill="#e0b060" opacity="0.22"/>
+                        <rect x="580" y="740" width="10" height="200" fill="#ffd98a" opacity="0.16"/>
+                        <rect x="880" y="740" width="10" height="210" fill="#ffd98a" opacity="0.16"/>
+                        <rect x="1355" y="740" width="12" height="220" fill="#9fd8ff" opacity="0.18"/>
+                    </g>
+                    <rect x="1234" y="720" width="30" height="200" fill="#fff" opacity="0.10" filter="url(#blur12)"/>
+                    <g stroke="#ffffff" stroke-width="1.5" opacity="0.06">
+                        <line x1="150" y1="760" x2="520" y2="760"/><line x1="700" y1="800" x2="1150" y2="800"/>
+                        <line x1="300" y1="855" x2="760" y2="855"/><line x1="1000" y1="890" x2="1480" y2="890"/>
+                        <line x1="80" y1="930" x2="620" y2="930"/>
+                    </g>
+                </svg>
+                <div class="hero-overlay"></div>
+
+                <div class="hero-content">
+                    <div class="hero-kicker">Seoul · Gangnam Beauty Trip</div>
+                    <h1>숨겨진 뷰티 본능 테스트</h1>
+                    <div class="hook">한강의 야경만큼, 당신도 빛날 수 있으니까 ✨</div>
+                    <p class="sub">5개 질문이면 끝납니다.<br/>당신이 진짜 원하는 아름다움이 뭔지,<br/>그리고 그걸 현실로 만들어줄 강남의 단 하나의 답까지.</p>
+                    <div class="hero-features">
+                        <strong>✓ 나도 몰랐던 나의 뷰티 본능 발견</strong><br/>
+                        <strong>✓ 강남 인사이더만 아는 맞춤 매칭</strong><br/>
+                        <strong>✓ 소요 시간 단 1분</strong>
+                    </div>
+                    <button class="btn-hero" onclick="startTest()">내 뷰티 본능 확인하기</button>
+                    <div class="hero-eng">Discover your beauty type in 60 seconds · Gangnam, Seoul</div>
+                </div>
+            </div>
+
+            <!-- Questions Screen -->
+            <div id="questionScreen" class="question-screen hidden">
+                <div class="question-number"><span id="questionNum">1</span> / 5</div>
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+                <h2 id="questionText"></h2>
+                <div class="options" id="optionsContainer"></div>
+                <div style="margin-top: 30px; display: flex; gap: 12px;">
+                    <button class="btn-secondary" onclick="prevQuestion()" style="flex: 1;">이전</button>
+                    <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled style="flex: 1;">다음</button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="resultScreen" class="result-screen hidden">
+                <div class="result-badge" id="resultType"></div>
+                <h2 class="title" id="resultTitle"></h2>
+
+                <div class="result-content">
+                    <h3>당신의 특성</h3>
+                    <p id="resultDescription"></p>
+                </div>
+
+                <div class="hospital-info">
+                    <div style="font-size: 12px; color: #999; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">당신을 위한 단 하나의 답</div>
+                    <div class="hospital-name" id="hospitalName">💎 레오성형외과</div>
+                    <div class="hospital-desc" id="hospitalReason"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-restart" onclick="restartTest()">다시 해보기</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            강남 인사이더의 성형외과 매칭 | © 2026
+        </div>
+    </div>
+
+    <script>
+        // Test Data
+        const questions = [
+            {
+                id: 1,
+                text: "당신에게 '성공한 시술'의 기준은?",
+                options: [
+                    { text: "아무도 눈치 못 채는데 나만 아는 '어? 나 예뻐졌네'", scores: { natural: 3, bold: 0, partial: 0, cautious: 3 } },
+                    { text: "친구들이 \"너 뭐 했어?!\"라고 캐묻는 확실한 변화", scores: { natural: 0, bold: 3, partial: 1, cautious: 0 } },
+                    { text: "딱 한 곳, 몇 년째 거슬리던 그 부분만 완벽하게", scores: { natural: 1, bold: 0, partial: 3, cautious: 1 } },
+                    { text: "글쎄... 프로가 내 얼굴 보고 판단해줬으면", scores: { natural: 1, bold: 0, partial: 0, cautious: 3 } }
+                ]
+            },
+            {
+                id: 2,
+                text: "거울 앞에서 자꾸만 시선이 머무는 곳은?",
+                options: [
+                    { text: "전체적인 분위기 — 뭐라 콕 집긴 어려운데 달라지고 싶다", scores: { natural: 2, bold: 1, partial: 0, cautious: 2 } },
+                    { text: "눈, 코, 입술... 이미 딱 정해져 있다", scores: { natural: 1, bold: 1, partial: 3, cautious: 1 } },
+                    { text: "피부결과 잔주름 — 디테일이 곧 클래스니까", scores: { natural: 3, bold: 0, partial: 2, cautious: 2 } },
+                    { text: "얼굴형 자체. 인생 리셋급 변화를 원한다", scores: { natural: 0, bold: 3, partial: 0, cautious: 0 } }
+                ]
+            },
+            {
+                id: 3,
+                text: "솔직하게, 시술 경험치는 어느 정도?",
+                options: [
+                    { text: "완전 처음. 설레는데 솔직히 좀 떨린다", scores: { natural: 2, bold: 0, partial: 1, cautious: 3 } },
+                    { text: "보톡스·필러 정도는 해봤지 (이미 반쯤 프로)", scores: { natural: 2, bold: 1, partial: 1, cautious: 1 } },
+                    { text: "수술까지 경험 완료. 이제 다음 스텝 준비 중", scores: { natural: 1, bold: 2, partial: 2, cautious: 0 } },
+                    { text: "시술 이력만 나열해도 이력서 한 장 (베테랑)", scores: { natural: 0, bold: 3, partial: 1, cautious: 1 } }
+                ]
+            },
+            {
+                id: 4,
+                text: "당신이 믿고 맡길 의사 선생님 스타일은?",
+                options: [
+                    { text: "\"환자분, 이건 안 하셔도 돼요\" 오히려 말려주는 선생님", scores: { natural: 3, bold: 0, partial: 1, cautious: 3 } },
+                    { text: "요즘 트렌드를 다 꿰고 있는 감각파", scores: { natural: 1, bold: 2, partial: 2, cautious: 0 } },
+                    { text: "내 얼굴만의 매력 포인트를 찾아주는 맞춤형 장인", scores: { natural: 2, bold: 1, partial: 3, cautious: 1 } },
+                    { text: "\"이렇게 하면 확 달라집니다\" 확신의 승부사", scores: { natural: 0, bold: 3, partial: 0, cautious: 0 } }
+                ]
+            },
+            {
+                id: 5,
+                text: "시술 플랜, 당신의 스타일은?",
+                options: [
+                    { text: "기왕 하는 거 한 번에 싹 다! 화끈하게 간다", scores: { natural: 0, bold: 3, partial: 0, cautious: 0 } },
+                    { text: "천천히, 하나씩, 완성도 있게 쌓아간다", scores: { natural: 2, bold: 0, partial: 2, cautious: 3 } },
+                    { text: "다른 데는 됐고, 그 부분만 끝장을 본다", scores: { natural: 1, bold: 0, partial: 3, cautious: 1 } },
+                    { text: "일단 상담부터. 프로의 플랜을 듣고 결정한다", scores: { natural: 1, bold: 0, partial: 0, cautious: 3 } }
+                ]
+            }
+        ];
+
+        const results = {
+            natural: {
+                title: "티 안 나게 예뻐지는 고수 타입",
+                badge: "Natural Beauty",
+                description: "목표는 단 하나 — \"쟤 원래 저렇게 예뻤나?\" 소리 듣기. 과한 건 오히려 촌스럽다는 걸 아는 진짜 고수예요. 원판은 그대로, 한 끗만 다르게. 당신에게 필요한 건 티 안 나게 만드는 섬세한 손입니다.",
+                hospital: "레오성형외과",
+                reason: "레오성형외과는 강남에서 '한 듯 안 한 듯'의 정석으로 통하는 곳. 미세 보톡스·필러와 디테일한 피부 시술로, 당신의 원판 위에 자연스러운 한 끗을 얹어드립니다. 아는 사람만 조용히 다니는 이유가 있죠."
+            },
+            bold: {
+                title: "인생 2회차 노리는 과감파",
+                badge: "Bold Transformation",
+                description: "어차피 할 거면 확실하게! 당신은 변화가 두렵지 않은 타입이에요. 비포·애프터 사진으로 모두를 놀라게 할 준비가 이미 끝난 사람. 어설픈 손보다는 확실한 실력자가 필요합니다.",
+                hospital: "레오성형외과",
+                reason: "레오성형외과는 고난도 시술 경험이 풍부해 과감한 변화도 안전하게 설계합니다. 윤곽 라인부터 종합 플랜까지 — 당신의 '인생 2회차' 프로젝트, 여기서 시작하면 됩니다."
+            },
+            partial: {
+                title: "딱 거기만! 스나이퍼 타입",
+                badge: "Focused Excellence",
+                description: "온 얼굴 다 만질 필요 없죠. 몇 년째 거슬리던 딱 한 곳 — 그것만 해결되면 게임 끝이라는 걸 아는 효율파. 목표가 명확한 만큼, 결과 만족도도 최상급으로 나오는 타입입니다.",
+                hospital: "레오성형외과",
+                reason: "레오성형외과에는 눈·코·입술·턱, 부위별 전문 의료진이 포진해 있습니다. 당신이 조준한 '그 한 곳'을 정확히 저격해 끝내드립니다. 스나이퍼에게는 스나이퍼가 답이니까요."
+            },
+            cautious: {
+                title: "돌다리도 두드리는 프로 신중러",
+                badge: "Thoughtful Journey",
+                description: "후기 100개는 기본으로 정독하는 당신. 신중한 만큼 실패 확률도 가장 낮은 타입이에요. 지금 필요한 건 단 하나 — 밀어붙이지 않고, 내 페이스에 맞춰주는 믿을 만한 곳.",
+                hospital: "레오성형외과",
+                reason: "레오성형외과는 '일단 팔고 보자'가 아니라, 단계별 플랜부터 함께 세워주는 상담으로 유명합니다. 첫 시술부터 최종 목표까지 — 신중러의 속도에 맞춰 함께 가는 파트너입니다."
+            }
+        };
+
+        // State
+        let currentQuestion = 0;
+        let scores = { natural: 0, bold: 0, partial: 0, cautious: 0 };
+        let selectedAnswers = new Array(questions.length).fill(null);
+
+        // Functions
+        function startTest() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('questionScreen').classList.remove('hidden');
+            document.getElementById('mainHeader').classList.remove('hidden');
+            document.getElementById('mainContent').classList.remove('hero-mode');
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionNum').textContent = currentQuestion + 1;
+            document.getElementById('questionText').textContent = question.text;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const label = document.createElement('label');
+                label.className = 'option' + (selectedAnswers[currentQuestion] === index ? ' selected' : '');
+
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'answer';
+                input.value = index;
+                input.checked = selectedAnswers[currentQuestion] === index;
+                input.onchange = () => selectOption(index, label);
+
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(option.text));
+                optionsContainer.appendChild(label);
+            });
+
+            updateProgressBar();
+            updateNavigationButtons();
+        }
+
+        function selectOption(index, label) {
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            label.classList.add('selected');
+
+            selectedAnswers[currentQuestion] = index;
+            updateNavigationButtons();
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function updateNavigationButtons() {
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.disabled = selectedAnswers[currentQuestion] === null;
+        }
+
+        function nextQuestion() {
+            if (selectedAnswers[currentQuestion] === null) return;
+
+            const option = questions[currentQuestion].options[selectedAnswers[currentQuestion]];
+            Object.keys(option.scores).forEach(type => {
+                scores[type] += option.scores[type];
+            });
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('questionScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            // Find the result type with highest score
+            let maxScore = 0;
+            let resultType = 'natural';
+            Object.keys(scores).forEach(type => {
+                if (scores[type] > maxScore) {
+                    maxScore = scores[type];
+                    resultType = type;
+                }
+            });
+
+            const result = results[resultType];
+            document.getElementById('resultType').textContent = result.badge;
+            document.getElementById('resultTitle').textContent = result.title;
+            document.getElementById('resultDescription').textContent = result.description;
+            document.getElementById('hospitalReason').textContent = result.reason;
+
+            // Scroll to top
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function restartTest() {
+            currentQuestion = 0;
+            scores = { natural: 0, bold: 0, partial: 0, cautious: 0 };
+            selectedAnswers = new Array(questions.length).fill(null);
+
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.getElementById('mainHeader').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('hero-mode');
+            document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
