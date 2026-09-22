@@ -1,0 +1,443 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="'Noto Sans KR', sans-serif">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e9eef5"/>
+      <stop offset="1" stop-color="#d3dbe6"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b9c3d0"/>
+      <stop offset="1" stop-color="#8f9bab"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d1b2e"/>
+      <stop offset="1" stop-color="#132a48"/>
+    </linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#37f0ff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#37f0ff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#37f0ff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="desk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7f8fa"/>
+      <stop offset="1" stop-color="#d9dee6"/>
+    </linearGradient>
+    <linearGradient id="deskfront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c8cfd9"/>
+      <stop offset="1" stop-color="#a7b0bd"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3ec9ff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#3ec9ff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M22 0H0V22" fill="none" stroke="#2aa7d8" stroke-opacity="0.13" stroke-width="1"/>
+    </pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="14" stdDeviation="12" flood-color="#0b1a33" flood-opacity="0.35"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0b1a33" flood-opacity="0.18"/>
+    </filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="3"/></filter>
+  </defs>
+
+  <!-- 배경: 벽 / 바닥 -->
+  <rect width="1600" height="640" fill="url(#wall)"/>
+  <rect y="640" width="1600" height="360" fill="url(#floor)"/>
+  <path d="M0 640 L1600 640" stroke="#a5afbd" stroke-width="3"/>
+  <!-- 천장 조명 -->
+  <g fill="#ffffff" opacity="0.9">
+    <rect x="240" y="26" width="300" height="14" rx="7"/>
+    <rect x="650" y="26" width="300" height="14" rx="7"/>
+    <rect x="1060" y="26" width="300" height="14" rx="7"/>
+  </g>
+  <g fill="#ffffff" opacity="0.25">
+    <ellipse cx="390" cy="60" rx="220" ry="26"/>
+    <ellipse cx="800" cy="60" rx="220" ry="26"/>
+    <ellipse cx="1210" cy="60" rx="220" ry="26"/>
+  </g>
+
+  <!-- 상단 현수막 -->
+  <g filter="url(#soft)">
+    <rect x="430" y="70" width="740" height="64" rx="8" fill="#1d3557"/>
+    <rect x="430" y="70" width="10" height="64" rx="4" fill="#3ec9ff"/>
+    <rect x="1160" y="70" width="10" height="64" rx="4" fill="#3ec9ff"/>
+  </g>
+  <text x="800" y="114" text-anchor="middle" font-size="34" font-weight="700" fill="#ffffff">2026 신입 채용 · AI 면접 심사</text>
+
+  <!-- ===== 모니터 3대 ===== -->
+  <!-- 공통 모니터 매크로 (좌표별로 반복) -->
+  <g id="monitors">
+    <!-- 모니터 1 -->
+    <g transform="translate(150 160)">
+      <rect x="205" y="360" width="30" height="70" fill="#38424f"/>
+      <rect x="140" y="425" width="160" height="14" rx="7" fill="#2c343f"/>
+      <rect x="0" y="0" width="440" height="360" rx="14" fill="#1f2730" filter="url(#shadow)"/>
+      <rect x="14" y="14" width="412" height="322" rx="6" fill="url(#screen)"/>
+      <rect x="14" y="14" width="412" height="322" rx="6" fill="url(#grid)"/>
+      <circle cx="220" cy="180" r="170" fill="url(#glow)"/>
+      <!-- 지원자 1: 단발머리 여성 -->
+      <g transform="translate(150 60)">
+        <!-- 목/어깨 -->
+        <path d="M-10 210 Q70 190 150 210 L150 276 L-10 276 Z" fill="#3a6ea5"/>
+        <rect x="45" y="165" width="50" height="50" fill="#f0c9a6"/>
+        <path d="M45 165 Q70 215 95 165 Z" fill="#dfb08c"/>
+        <!-- 머리 뒷부분 -->
+        <path d="M8 90 Q8 20 70 18 Q132 20 132 90 L138 190 L2 190 Z" fill="#3b2a24"/>
+        <!-- 얼굴 -->
+        <ellipse cx="70" cy="105" rx="52" ry="62" fill="#f6d5b8"/>
+        <!-- 앞머리 -->
+        <path d="M18 92 Q20 30 70 30 Q120 30 122 92 Q95 60 68 75 Q45 62 18 92Z" fill="#3b2a24"/>
+        <!-- 귀 -->
+        <ellipse cx="18" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <ellipse cx="122" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <!-- 눈썹/눈/코/입 -->
+        <path d="M40 92 Q52 86 62 92" stroke="#3b2a24" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M78 92 Q88 86 100 92" stroke="#3b2a24" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <ellipse cx="51" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <ellipse cx="89" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <circle cx="53" cy="106" r="2" fill="#fff"/>
+        <circle cx="91" cy="106" r="2" fill="#fff"/>
+        <path d="M70 118 Q66 130 72 132" stroke="#d8a887" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M54 144 Q70 156 86 144" stroke="#c9605e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="42" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+        <ellipse cx="98" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+      </g>
+      <!-- AI 얼굴 인식 오버레이 -->
+      <g fill="none" stroke="#37f0ff" stroke-width="2.5">
+        <path d="M150 90 v-22 h22"/><path d="M290 90 v-22 h-22"/>
+        <path d="M150 230 v22 h22"/><path d="M290 230 v22 h-22"/>
+        <rect x="150" y="68" width="140" height="184" rx="6" stroke-dasharray="6 6" stroke-opacity="0.6"/>
+      </g>
+      <!-- 랜드마크 메쉬 -->
+      <g stroke="#37f0ff" stroke-width="1" stroke-opacity="0.7" fill="none">
+        <polyline points="201,168 220,168 239,168 250,186 239,204 220,210 201,204 190,186 201,168"/>
+        <polyline points="201,168 220,150 239,168 220,190 201,168"/>
+        <polyline points="190,186 220,190 250,186"/>
+        <polyline points="201,204 220,224 239,204"/>
+      </g>
+      <g fill="#37f0ff">
+        <circle cx="201" cy="168" r="3"/><circle cx="239" cy="168" r="3"/><circle cx="220" cy="150" r="3"/>
+        <circle cx="220" cy="190" r="3"/><circle cx="190" cy="186" r="3"/><circle cx="250" cy="186" r="3"/>
+        <circle cx="201" cy="204" r="3"/><circle cx="239" cy="204" r="3"/><circle cx="220" cy="224" r="3"/>
+        <circle cx="220" cy="210" r="3"/>
+      </g>
+      <!-- 스캔 라인 -->
+      <rect x="150" y="150" width="140" height="4" fill="url(#scan)"/>
+      <rect x="150" y="150" width="140" height="18" fill="#37f0ff" opacity="0.12"/>
+      <!-- 상단 헤더 -->
+      <rect x="14" y="14" width="412" height="30" fill="#0a1626" opacity="0.85"/>
+      <circle cx="34" cy="29" r="5" fill="#ff5b5b"/>
+      <text x="46" y="34" font-size="13" fill="#ff8a8a" font-weight="700">REC</text>
+      <text x="220" y="34" text-anchor="middle" font-size="14" fill="#cfe9ff" font-weight="700">지원자 #01 · 김하늘</text>
+      <text x="410" y="34" text-anchor="end" font-size="12" fill="#7fc9ff">AI 분석중…</text>
+      <!-- 우측 분석 패널 -->
+      <g transform="translate(300 60)">
+        <rect x="0" y="0" width="118" height="200" rx="6" fill="#0a1626" opacity="0.8"/>
+        <text x="10" y="20" font-size="11" fill="#9ad8ff" font-weight="700">역량 분석</text>
+        <text x="10" y="40" font-size="10" fill="#cfe9ff">자신감</text>
+        <rect x="10" y="45" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="45" width="84" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="68" font-size="10" fill="#cfe9ff">논리력</text>
+        <rect x="10" y="73" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="73" width="70" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="96" font-size="10" fill="#cfe9ff">표정 안정도</text>
+        <rect x="10" y="101" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="101" width="90" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="124" font-size="10" fill="#cfe9ff">발화 명료도</text>
+        <rect x="10" y="129" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="129" width="76" height="6" rx="3" fill="#37f0ff"/>
+        <!-- 신경망 미니 다이어그램 -->
+        <g stroke="#37f0ff" stroke-opacity="0.5" stroke-width="1">
+          <line x1="20" y1="150" x2="58" y2="145"/><line x1="20" y1="150" x2="58" y2="165"/><line x1="20" y1="150" x2="58" y2="185"/>
+          <line x1="20" y1="170" x2="58" y2="145"/><line x1="20" y1="170" x2="58" y2="165"/><line x1="20" y1="170" x2="58" y2="185"/>
+          <line x1="20" y1="190" x2="58" y2="145"/><line x1="20" y1="190" x2="58" y2="165"/><line x1="20" y1="190" x2="58" y2="185"/>
+          <line x1="58" y1="145" x2="98" y2="167"/><line x1="58" y1="165" x2="98" y2="167"/><line x1="58" y1="185" x2="98" y2="167"/>
+        </g>
+        <g fill="#37f0ff">
+          <circle cx="20" cy="150" r="3.5"/><circle cx="20" cy="170" r="3.5"/><circle cx="20" cy="190" r="3.5"/>
+          <circle cx="58" cy="145" r="3.5"/><circle cx="58" cy="165" r="3.5"/><circle cx="58" cy="185" r="3.5"/>
+          <circle cx="98" cy="167" r="5"/>
+        </g>
+      </g>
+      <!-- 하단 종합 점수 -->
+      <rect x="14" y="296" width="412" height="40" fill="#0a1626" opacity="0.85"/>
+      <text x="30" y="322" font-size="14" fill="#cfe9ff">종합 적합도</text>
+      <text x="410" y="323" text-anchor="end" font-size="20" font-weight="700" fill="#37f0ff">87%</text>
+      <rect x="140" y="313" width="190" height="8" rx="4" fill="#1f3a5a"/>
+      <rect x="140" y="313" width="165" height="8" rx="4" fill="#37f0ff"/>
+    </g>
+
+    <!-- 모니터 2 (가운데) -->
+    <g transform="translate(580 160)">
+      <rect x="205" y="360" width="30" height="70" fill="#38424f"/>
+      <rect x="140" y="425" width="160" height="14" rx="7" fill="#2c343f"/>
+      <rect x="0" y="0" width="440" height="360" rx="14" fill="#1f2730" filter="url(#shadow)"/>
+      <rect x="14" y="14" width="412" height="322" rx="6" fill="url(#screen)"/>
+      <rect x="14" y="14" width="412" height="322" rx="6" fill="url(#grid)"/>
+      <circle cx="220" cy="180" r="170" fill="url(#glow)"/>
+      <!-- 지원자 2: 짧은 머리 남성 -->
+      <g transform="translate(150 60)">
+        <path d="M-10 210 Q70 190 150 210 L150 276 L-10 276 Z" fill="#2f3b52"/>
+        <path d="M45 200 L70 232 L95 200 L95 214 L70 246 L45 214 Z" fill="#ffffff"/>
+        <path d="M62 214 L70 232 L78 214 L70 250 Z" fill="#b23a48"/>
+        <rect x="45" y="165" width="50" height="50" fill="#e8bd97"/>
+        <path d="M45 165 Q70 215 95 165 Z" fill="#d6a67f"/>
+        <ellipse cx="70" cy="105" rx="52" ry="62" fill="#f1caa4"/>
+        <path d="M16 96 Q12 28 70 24 Q128 28 124 96 Q112 70 90 66 Q64 60 44 74 Q28 82 16 96Z" fill="#1f1a1a"/>
+        <ellipse cx="18" cy="110" rx="8" ry="12" fill="#e8bd97"/>
+        <ellipse cx="122" cy="110" rx="8" ry="12" fill="#e8bd97"/>
+        <path d="M38 90 Q52 84 64 90" stroke="#1f1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M76 90 Q88 84 102 90" stroke="#1f1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="51" cy="108" rx="6" ry="6" fill="#2b2b2b"/>
+        <ellipse cx="89" cy="108" rx="6" ry="6" fill="#2b2b2b"/>
+        <circle cx="53" cy="106" r="2" fill="#fff"/>
+        <circle cx="91" cy="106" r="2" fill="#fff"/>
+        <path d="M70 116 Q65 132 74 134" stroke="#cf9e78" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M56 146 Q70 154 84 146" stroke="#b9635e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      </g>
+      <g fill="none" stroke="#37f0ff" stroke-width="2.5">
+        <path d="M150 90 v-22 h22"/><path d="M290 90 v-22 h-22"/>
+        <path d="M150 230 v22 h22"/><path d="M290 230 v22 h-22"/>
+        <rect x="150" y="68" width="140" height="184" rx="6" stroke-dasharray="6 6" stroke-opacity="0.6"/>
+      </g>
+      <g stroke="#37f0ff" stroke-width="1" stroke-opacity="0.7" fill="none">
+        <polyline points="201,168 220,168 239,168 250,186 239,204 220,210 201,204 190,186 201,168"/>
+        <polyline points="201,168 220,150 239,168 220,190 201,168"/>
+        <polyline points="190,186 220,190 250,186"/>
+        <polyline points="201,204 220,224 239,204"/>
+      </g>
+      <g fill="#37f0ff">
+        <circle cx="201" cy="168" r="3"/><circle cx="239" cy="168" r="3"/><circle cx="220" cy="150" r="3"/>
+        <circle cx="220" cy="190" r="3"/><circle cx="190" cy="186" r="3"/><circle cx="250" cy="186" r="3"/>
+        <circle cx="201" cy="204" r="3"/><circle cx="239" cy="204" r="3"/><circle cx="220" cy="224" r="3"/>
+        <circle cx="220" cy="210" r="3"/>
+      </g>
+      <rect x="150" y="196" width="140" height="4" fill="url(#scan)"/>
+      <rect x="150" y="196" width="140" height="18" fill="#37f0ff" opacity="0.12"/>
+      <rect x="14" y="14" width="412" height="30" fill="#0a1626" opacity="0.85"/>
+      <circle cx="34" cy="29" r="5" fill="#ff5b5b"/>
+      <text x="46" y="34" font-size="13" fill="#ff8a8a" font-weight="700">REC</text>
+      <text x="220" y="34" text-anchor="middle" font-size="14" fill="#cfe9ff" font-weight="700">지원자 #02 · 이준서</text>
+      <text x="410" y="34" text-anchor="end" font-size="12" fill="#7fc9ff">AI 분석중…</text>
+      <g transform="translate(300 60)">
+        <rect x="0" y="0" width="118" height="200" rx="6" fill="#0a1626" opacity="0.8"/>
+        <text x="10" y="20" font-size="11" fill="#9ad8ff" font-weight="700">역량 분석</text>
+        <text x="10" y="40" font-size="10" fill="#cfe9ff">자신감</text>
+        <rect x="10" y="45" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="45" width="72" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="68" font-size="10" fill="#cfe9ff">논리력</text>
+        <rect x="10" y="73" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="73" width="92" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="96" font-size="10" fill="#cfe9ff">표정 안정도</text>
+        <rect x="10" y="101" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="101" width="66" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="124" font-size="10" fill="#cfe9ff">발화 명료도</text>
+        <rect x="10" y="129" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="129" width="88" height="6" rx="3" fill="#37f0ff"/>
+        <g stroke="#37f0ff" stroke-opacity="0.5" stroke-width="1">
+          <line x1="20" y1="150" x2="58" y2="145"/><line x1="20" y1="150" x2="58" y2="165"/><line x1="20" y1="150" x2="58" y2="185"/>
+          <line x1="20" y1="170" x2="58" y2="145"/><line x1="20" y1="170" x2="58" y2="165"/><line x1="20" y1="170" x2="58" y2="185"/>
+          <line x1="20" y1="190" x2="58" y2="145"/><line x1="20" y1="190" x2="58" y2="165"/><line x1="20" y1="190" x2="58" y2="185"/>
+          <line x1="58" y1="145" x2="98" y2="167"/><line x1="58" y1="165" x2="98" y2="167"/><line x1="58" y1="185" x2="98" y2="167"/>
+        </g>
+        <g fill="#37f0ff">
+          <circle cx="20" cy="150" r="3.5"/><circle cx="20" cy="170" r="3.5"/><circle cx="20" cy="190" r="3.5"/>
+          <circle cx="58" cy="145" r="3.5"/><circle cx="58" cy="165" r="3.5"/><circle cx="58" cy="185" r="3.5"/>
+          <circle cx="98" cy="167" r="5"/>
+        </g>
+      </g>
+      <rect x="14" y="296" width="412" height="40" fill="#0a1626" opacity="0.85"/>
+      <text x="30" y="322" font-size="14" fill="#cfe9ff">종합 적합도</text>
+      <text x="410" y="323" text-anchor="end" font-size="20" font-weight="700" fill="#37f0ff">91%</text>
+      <rect x="140" y="313" width="190" height="8" rx="4" fill="#1f3a5a"/>
+      <rect x="140" y="313" width="173" height="8" rx="4" fill="#37f0ff"/>
+    </g>
+
+    <!-- 모니터 3 -->
+    <g transform="translate(1010 160)">
+      <rect x="205" y="360" width="30" height="70" fill="#38424f"/>
+      <rect x="140" y="425" width="160" height="14" rx="7" fill="#2c343f"/>
+      <rect x="0" y="0" width="440" height="360" rx="14" fill="#1f2730" filter="url(#shadow)"/>
+      <rect x="14" y="14" width="412" height="322" rx="6" fill="url(#screen)"/>
+      <rect x="14" y="14" width="412" height="322" rx="6" fill="url(#grid)"/>
+      <circle cx="220" cy="180" r="170" fill="url(#glow)"/>
+      <!-- 지원자 3: 긴 머리 여성 (안경) -->
+      <g transform="translate(150 60)">
+        <path d="M-10 210 Q70 190 150 210 L150 276 L-10 276 Z" fill="#6b5b95"/>
+        <path d="M0 200 Q10 120 30 100 L40 200 Z" fill="#5a3a2a"/>
+        <path d="M140 200 Q130 120 110 100 L100 200 Z" fill="#5a3a2a"/>
+        <rect x="45" y="165" width="50" height="50" fill="#f0c9a6"/>
+        <path d="M45 165 Q70 215 95 165 Z" fill="#dfb08c"/>
+        <path d="M6 100 Q6 20 70 18 Q134 20 134 100 L140 200 L0 200 Z" fill="#5a3a2a"/>
+        <ellipse cx="70" cy="105" rx="52" ry="62" fill="#f6d5b8"/>
+        <path d="M18 96 Q18 30 70 28 Q122 30 122 96 Q118 62 96 62 Q80 58 70 66 Q52 56 34 66 Q22 74 18 96Z" fill="#5a3a2a"/>
+        <ellipse cx="18" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <ellipse cx="122" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <path d="M40 90 Q52 85 62 90" stroke="#4a2f22" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M78 90 Q88 85 100 90" stroke="#4a2f22" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <ellipse cx="51" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <ellipse cx="89" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <circle cx="53" cy="106" r="2" fill="#fff"/>
+        <circle cx="91" cy="106" r="2" fill="#fff"/>
+        <!-- 안경 -->
+        <g fill="none" stroke="#2b2b2b" stroke-width="2.5">
+          <rect x="34" y="97" width="32" height="22" rx="8"/>
+          <rect x="74" y="97" width="32" height="22" rx="8"/>
+          <path d="M66 106 Q70 102 74 106"/>
+          <path d="M34 104 L22 100"/><path d="M106 104 L118 100"/>
+        </g>
+        <path d="M70 118 Q66 130 72 132" stroke="#d8a887" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M54 144 Q70 158 86 144" stroke="#c9605e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="42" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+        <ellipse cx="98" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+      </g>
+      <g fill="none" stroke="#37f0ff" stroke-width="2.5">
+        <path d="M150 90 v-22 h22"/><path d="M290 90 v-22 h-22"/>
+        <path d="M150 230 v22 h22"/><path d="M290 230 v22 h-22"/>
+        <rect x="150" y="68" width="140" height="184" rx="6" stroke-dasharray="6 6" stroke-opacity="0.6"/>
+      </g>
+      <g stroke="#37f0ff" stroke-width="1" stroke-opacity="0.7" fill="none">
+        <polyline points="201,168 220,168 239,168 250,186 239,204 220,210 201,204 190,186 201,168"/>
+        <polyline points="201,168 220,150 239,168 220,190 201,168"/>
+        <polyline points="190,186 220,190 250,186"/>
+        <polyline points="201,204 220,224 239,204"/>
+      </g>
+      <g fill="#37f0ff">
+        <circle cx="201" cy="168" r="3"/><circle cx="239" cy="168" r="3"/><circle cx="220" cy="150" r="3"/>
+        <circle cx="220" cy="190" r="3"/><circle cx="190" cy="186" r="3"/><circle cx="250" cy="186" r="3"/>
+        <circle cx="201" cy="204" r="3"/><circle cx="239" cy="204" r="3"/><circle cx="220" cy="224" r="3"/>
+        <circle cx="220" cy="210" r="3"/>
+      </g>
+      <rect x="150" y="120" width="140" height="4" fill="url(#scan)"/>
+      <rect x="150" y="120" width="140" height="18" fill="#37f0ff" opacity="0.12"/>
+      <rect x="14" y="14" width="412" height="30" fill="#0a1626" opacity="0.85"/>
+      <circle cx="34" cy="29" r="5" fill="#ff5b5b"/>
+      <text x="46" y="34" font-size="13" fill="#ff8a8a" font-weight="700">REC</text>
+      <text x="220" y="34" text-anchor="middle" font-size="14" fill="#cfe9ff" font-weight="700">지원자 #03 · 박서연</text>
+      <text x="410" y="34" text-anchor="end" font-size="12" fill="#7fc9ff">AI 분석중…</text>
+      <g transform="translate(300 60)">
+        <rect x="0" y="0" width="118" height="200" rx="6" fill="#0a1626" opacity="0.8"/>
+        <text x="10" y="20" font-size="11" fill="#9ad8ff" font-weight="700">역량 분석</text>
+        <text x="10" y="40" font-size="10" fill="#cfe9ff">자신감</text>
+        <rect x="10" y="45" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="45" width="78" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="68" font-size="10" fill="#cfe9ff">논리력</text>
+        <rect x="10" y="73" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="73" width="94" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="96" font-size="10" fill="#cfe9ff">표정 안정도</text>
+        <rect x="10" y="101" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="101" width="82" height="6" rx="3" fill="#37f0ff"/>
+        <text x="10" y="124" font-size="10" fill="#cfe9ff">발화 명료도</text>
+        <rect x="10" y="129" width="98" height="6" rx="3" fill="#1f3a5a"/>
+        <rect x="10" y="129" width="60" height="6" rx="3" fill="#37f0ff"/>
+        <g stroke="#37f0ff" stroke-opacity="0.5" stroke-width="1">
+          <line x1="20" y1="150" x2="58" y2="145"/><line x1="20" y1="150" x2="58" y2="165"/><line x1="20" y1="150" x2="58" y2="185"/>
+          <line x1="20" y1="170" x2="58" y2="145"/><line x1="20" y1="170" x2="58" y2="165"/><line x1="20" y1="170" x2="58" y2="185"/>
+          <line x1="20" y1="190" x2="58" y2="145"/><line x1="20" y1="190" x2="58" y2="165"/><line x1="20" y1="190" x2="58" y2="185"/>
+          <line x1="58" y1="145" x2="98" y2="167"/><line x1="58" y1="165" x2="98" y2="167"/><line x1="58" y1="185" x2="98" y2="167"/>
+        </g>
+        <g fill="#37f0ff">
+          <circle cx="20" cy="150" r="3.5"/><circle cx="20" cy="170" r="3.5"/><circle cx="20" cy="190" r="3.5"/>
+          <circle cx="58" cy="145" r="3.5"/><circle cx="58" cy="165" r="3.5"/><circle cx="58" cy="185" r="3.5"/>
+          <circle cx="98" cy="167" r="5"/>
+        </g>
+      </g>
+      <rect x="14" y="296" width="412" height="40" fill="#0a1626" opacity="0.85"/>
+      <text x="30" y="322" font-size="14" fill="#cfe9ff">종합 적합도</text>
+      <text x="410" y="323" text-anchor="end" font-size="20" font-weight="700" fill="#37f0ff">84%</text>
+      <rect x="140" y="313" width="190" height="8" rx="4" fill="#1f3a5a"/>
+      <rect x="140" y="313" width="160" height="8" rx="4" fill="#37f0ff"/>
+    </g>
+  </g>
+
+  <!-- ===== 심사위원 책상 ===== -->
+  <g filter="url(#soft)">
+    <path d="M120 660 L1480 660 L1560 760 L40 760 Z" fill="url(#desk)"/>
+    <path d="M40 760 L1560 760 L1560 830 L40 830 Z" fill="url(#deskfront)"/>
+    <rect x="40" y="826" width="1520" height="10" fill="#8f99a7"/>
+  </g>
+  <!-- 책상 위 소품: 노트북, 서류, 물컵, 명패 -->
+  <g>
+    <!-- 노트북 (왼쪽 심사위원) -->
+    <path d="M300 690 L470 690 L490 712 L280 712 Z" fill="#c2c9d3"/>
+    <path d="M312 640 L462 640 L470 690 L300 690 Z" fill="#3a4351"/>
+    <path d="M318 646 L456 646 L463 684 L308 684 Z" fill="#1a3d63"/>
+    <!-- 노트북 (오른쪽 심사위원) -->
+    <path d="M1130 690 L1300 690 L1320 712 L1110 712 Z" fill="#c2c9d3"/>
+    <path d="M1142 640 L1292 640 L1300 690 L1130 690 Z" fill="#3a4351"/>
+    <path d="M1148 646 L1286 646 L1293 684 L1138 684 Z" fill="#1a3d63"/>
+    <!-- 서류 (가운데) -->
+    <path d="M700 690 L840 690 L852 720 L688 720 Z" fill="#ffffff" stroke="#c9d1dc"/>
+    <path d="M712 696 L826 696 M714 703 L822 703 M716 710 L818 710" stroke="#b7c1cf" stroke-width="2"/>
+    <path d="M760 680 L900 680 L910 705 L750 705 Z" fill="#fff8d6" stroke="#e5d9a3"/>
+    <!-- 물컵 -->
+    <g fill="#e6f4ff" stroke="#9fbfda" stroke-width="2">
+      <path d="M560 672 L578 672 L575 714 L563 714 Z"/>
+      <path d="M1000 672 L1018 672 L1015 714 L1003 714 Z"/>
+    </g>
+    <!-- 명패 -->
+    <g>
+      <path d="M450 736 L620 736 L630 764 L440 764 Z" fill="#1d3557"/>
+      <text x="535" y="756" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">심사위원석</text>
+      <path d="M980 736 L1150 736 L1160 764 L970 764 Z" fill="#1d3557"/>
+      <text x="1065" y="756" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">심사위원석</text>
+    </g>
+  </g>
+
+  <!-- ===== 심사위원 3명 (뒷모습) ===== -->
+  <!-- 심사위원 1: 단발 + 베이지 자켓 -->
+  <g transform="translate(270 1000) scale(0.82) translate(0 -1000)">
+    <path d="M-120 1000 L-120 830 Q-120 800 -90 800 L90 800 Q120 800 120 830 L120 1000 Z" fill="#4b5563"/>
+    <path d="M-170 720 Q-100 640 0 640 Q100 640 170 720 L170 860 Q170 890 140 890 L-140 890 Q-170 890 -170 860 Z" fill="#d9c3a5"/>
+    <path d="M-20 650 L20 650 L26 780 L-26 780 Z" fill="#c9b08f"/>
+    <rect x="-24" y="590" width="48" height="70" fill="#e9c4a2"/>
+    <path d="M-88 560 Q-92 470 0 460 Q92 470 88 560 L92 660 Q60 700 0 700 Q-60 700 -92 660 Z" fill="#3b2a24"/>
+    <path d="M-70 520 Q-30 560 0 545 Q30 560 70 520" stroke="#2b1c18" stroke-width="3" fill="none" opacity="0.5"/>
+    <ellipse cx="-95" cy="576" rx="9" ry="13" fill="#e9c4a2"/>
+    <ellipse cx="95" cy="576" rx="9" ry="13" fill="#e9c4a2"/>
+    <circle cx="95" cy="590" r="4" fill="#f5d36b"/>
+    <circle cx="-95" cy="590" r="4" fill="#f5d36b"/>
+    <!-- 팔 (책상 위로) -->
+    <path d="M-160 780 Q-200 700 -110 690 L-90 700 Q-140 720 -130 800 Z" fill="#d9c3a5"/>
+    <path d="M160 780 Q200 700 110 690 L90 700 Q140 720 130 800 Z" fill="#d9c3a5"/>
+  </g>
+  <!-- 심사위원 2 (가운데): 올림머리(번) + 네이비 자켓 -->
+  <g transform="translate(800 1000) scale(0.82) translate(0 -1000)">
+    <path d="M-120 1000 L-120 830 Q-120 800 -90 800 L90 800 Q120 800 120 830 L120 1000 Z" fill="#4b5563"/>
+    <path d="M-170 720 Q-100 640 0 640 Q100 640 170 720 L170 860 Q170 890 140 890 L-140 890 Q-170 890 -170 860 Z" fill="#1d3557"/>
+    <path d="M-22 650 L22 650 L28 780 L-28 780 Z" fill="#162a45"/>
+    <rect x="-24" y="590" width="48" height="70" fill="#f0c9a6"/>
+    <ellipse cx="0" cy="560" rx="84" ry="98" fill="#1f1a1a"/>
+    <circle cx="0" cy="465" r="40" fill="#1f1a1a"/>
+    <circle cx="0" cy="465" r="26" fill="none" stroke="#111" stroke-width="3" opacity="0.6"/>
+    <path d="M-60 470 Q-20 520 0 500 Q20 520 60 470" stroke="#111" stroke-width="3" fill="none" opacity="0.6"/>
+    <ellipse cx="-86" cy="576" rx="9" ry="13" fill="#f0c9a6"/>
+    <ellipse cx="86" cy="576" rx="9" ry="13" fill="#f0c9a6"/>
+    <circle cx="86" cy="592" r="4" fill="#ffffff"/>
+    <circle cx="-86" cy="592" r="4" fill="#ffffff"/>
+    <!-- 팔: 펜 들고 채점 -->
+    <path d="M-160 780 Q-200 700 -110 690 L-90 700 Q-140 720 -130 800 Z" fill="#1d3557"/>
+    <path d="M160 780 Q200 700 110 690 L90 700 Q140 720 130 800 Z" fill="#1d3557"/>
+  </g>
+  <!-- 심사위원 3: 긴 웨이브 머리 + 와인 자켓 -->
+  <g transform="translate(1330 1000) scale(0.82) translate(0 -1000)">
+    <path d="M-120 1000 L-120 830 Q-120 800 -90 800 L90 800 Q120 800 120 830 L120 1000 Z" fill="#4b5563"/>
+    <path d="M-170 720 Q-100 640 0 640 Q100 640 170 720 L170 860 Q170 890 140 890 L-140 890 Q-170 890 -170 860 Z" fill="#7b2d3a"/>
+    <path d="M-22 650 L22 650 L28 780 L-28 780 Z" fill="#5f2029"/>
+    <rect x="-24" y="590" width="48" height="70" fill="#f0c9a6"/>
+    <path d="M-88 560 Q-92 470 0 460 Q92 470 88 560 L104 760 Q60 790 0 780 Q-60 790 -104 760 Z" fill="#6b3d2a"/>
+    <path d="M-70 600 Q-90 660 -60 700 Q-95 730 -70 770" stroke="#4e2a1c" stroke-width="4" fill="none" opacity="0.6"/>
+    <path d="M70 600 Q90 660 60 700 Q95 730 70 770" stroke="#4e2a1c" stroke-width="4" fill="none" opacity="0.6"/>
+    <path d="M-40 520 Q-10 540 0 530 Q10 540 40 520" stroke="#4e2a1c" stroke-width="3" fill="none" opacity="0.5"/>
+    <path d="M-160 780 Q-200 700 -110 690 L-90 700 Q-140 720 -130 800 Z" fill="#7b2d3a"/>
+    <path d="M160 780 Q200 700 110 690 L90 700 Q140 720 130 800 Z" fill="#7b2d3a"/>
+  </g>
+
+  <!-- 바닥 그림자 -->
+  <g fill="#0b1a33" opacity="0.12" filter="url(#blur)">
+    <ellipse cx="270" cy="960" rx="190" ry="24"/>
+    <ellipse cx="800" cy="960" rx="190" ry="24"/>
+    <ellipse cx="1330" cy="960" rx="190" ry="24"/>
+  </g>
+</svg>
