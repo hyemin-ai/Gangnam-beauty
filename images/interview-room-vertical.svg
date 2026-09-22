@@ -1,0 +1,308 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920" font-family="'Noto Sans KR', sans-serif">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9eef5"/><stop offset="1" stop-color="#cbd4e0"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b3bdcb"/><stop offset="1" stop-color="#7f8a9a"/></linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1b2e"/><stop offset="1" stop-color="#112742"/></linearGradient>
+    <linearGradient id="scan" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#37f0ff" stop-opacity="0"/><stop offset="0.5" stop-color="#37f0ff" stop-opacity="0.9"/><stop offset="1" stop-color="#37f0ff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="desk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f8fa"/><stop offset="1" stop-color="#d9dee6"/></linearGradient>
+    <linearGradient id="deskfront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8cfd9"/><stop offset="1" stop-color="#a7b0bd"/></linearGradient>
+    <linearGradient id="reflect" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#37f0ff" stop-opacity="0.25"/><stop offset="1" stop-color="#37f0ff" stop-opacity="0"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#3ec9ff" stop-opacity="0.35"/><stop offset="1" stop-color="#3ec9ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.45" r="0.75"><stop offset="0.6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.35"/></radialGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#2aa7d8" stroke-opacity="0.13"/></pattern>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#0b1a33" flood-opacity="0.4"/></filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0b1a33" flood-opacity="0.18"/></filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+
+  <!-- 벽 / 바닥 -->
+  <rect width="1080" height="1300" fill="url(#wall)"/>
+  <rect y="1300" width="1080" height="620" fill="url(#floor)"/>
+  <path d="M0 1300 L1080 1300" stroke="#a5afbd" stroke-width="3"/>
+  <g fill="#fff" opacity="0.9"><rect x="120" y="30" width="280" height="14" rx="7"/><rect x="680" y="30" width="280" height="14" rx="7"/></g>
+  <g fill="#fff" opacity="0.25"><ellipse cx="260" cy="64" rx="210" ry="26"/><ellipse cx="820" cy="64" rx="210" ry="26"/></g>
+
+  <!-- 현수막 -->
+  <g filter="url(#soft)">
+    <rect x="90" y="100" width="900" height="76" rx="8" fill="#1d3557"/>
+    <rect x="90" y="100" width="12" height="76" rx="4" fill="#3ec9ff"/>
+    <rect x="978" y="100" width="12" height="76" rx="4" fill="#3ec9ff"/>
+  </g>
+  <text x="540" y="152" text-anchor="middle" font-size="40" font-weight="700" fill="#fff">2026 신입 채용 · AI 면접 심사</text>
+
+  <!-- 대형 디스플레이 -->
+  <g filter="url(#shadow)"><rect x="60" y="210" width="960" height="1030" rx="18" fill="#1f2730"/></g>
+  <rect x="76" y="226" width="928" height="998" rx="8" fill="url(#screen)"/>
+  <rect x="76" y="226" width="928" height="998" rx="8" fill="url(#grid)"/>
+  <!-- 헤더 -->
+  <rect x="76" y="226" width="928" height="40" fill="#0a1626" opacity="0.9"/>
+  <circle cx="100" cy="246" r="6" fill="#37f0ff"/>
+  <text x="116" y="253" font-size="18" font-weight="700" fill="#9ad8ff">AI INTERVIEW ENGINE v3.2</text>
+  <text x="984" y="253" text-anchor="end" font-size="18" fill="#7fc9ff">실시간 분석 중 ●●●</text>
+  
+    <g>
+      <rect x="76" y="270" width="928" height="300" rx="10" fill="#0a1626" opacity="0.55"/>
+      <rect x="76" y="270" width="928" height="300" rx="10" fill="none" stroke="#37f0ff" stroke-opacity="0.25"/>
+      <circle cx="210" cy="420" r="150" fill="url(#glow)"/>
+      <g transform="translate(140 284) scale(0.9)">
+        <path d="M-10 210 Q70 190 150 210 L150 276 L-10 276 Z" fill="#3a6ea5"/>
+        <rect x="45" y="165" width="50" height="50" fill="#f0c9a6"/>
+        <path d="M45 165 Q70 215 95 165 Z" fill="#dfb08c"/>
+        <path d="M8 90 Q8 20 70 18 Q132 20 132 90 L138 190 L2 190 Z" fill="#3b2a24"/>
+        <ellipse cx="70" cy="105" rx="52" ry="62" fill="#f6d5b8"/>
+        <path d="M18 92 Q20 30 70 30 Q120 30 122 92 Q95 60 68 75 Q45 62 18 92Z" fill="#3b2a24"/>
+        <ellipse cx="18" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <ellipse cx="122" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <path d="M40 92 Q52 86 62 92" stroke="#3b2a24" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M78 92 Q88 86 100 92" stroke="#3b2a24" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <ellipse cx="51" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <ellipse cx="89" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <circle cx="53" cy="106" r="2" fill="#fff"/><circle cx="91" cy="106" r="2" fill="#fff"/>
+        <path d="M70 118 Q66 130 72 132" stroke="#d8a887" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M54 144 Q70 156 86 144" stroke="#c9605e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="42" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+        <ellipse cx="98" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+        <g fill="none" stroke="#37f0ff" stroke-width="2.5">
+          <path d="M0 30 v-22 h22"/><path d="M140 30 v-22 h-22"/>
+          <path d="M0 170 v22 h22"/><path d="M140 170 v22 h-22"/>
+          <rect x="0" y="8" width="140" height="184" rx="6" stroke-dasharray="6 6" stroke-opacity="0.6"/>
+        </g>
+        <g stroke="#37f0ff" stroke-width="1" stroke-opacity="0.7" fill="none">
+          <polyline points="51,108 70,108 89,108 100,126 89,144 70,150 51,144 40,126 51,108"/>
+          <polyline points="51,108 70,90 89,108 70,130 51,108"/>
+          <polyline points="40,126 70,130 100,126"/><polyline points="51,144 70,164 89,144"/>
+        </g>
+        <g fill="#37f0ff">
+          <circle cx="51" cy="108" r="3"/><circle cx="89" cy="108" r="3"/><circle cx="70" cy="90" r="3"/>
+          <circle cx="70" cy="130" r="3"/><circle cx="40" cy="126" r="3"/><circle cx="100" cy="126" r="3"/>
+          <circle cx="51" cy="144" r="3"/><circle cx="89" cy="144" r="3"/><circle cx="70" cy="164" r="3"/><circle cx="70" cy="150" r="3"/>
+        </g>
+        <rect x="0" y="90" width="140" height="4" fill="url(#scan)"/>
+        <rect x="0" y="90" width="140" height="18" fill="#37f0ff" opacity="0.12"/></g>
+      <text x="350" y="328" font-size="28" font-weight="700" fill="#ffffff">지원자 #01 · 김하늘</text>
+      <circle cx="960" cy="320" r="6" fill="#ff5b5b"/><text x="946" y="326" text-anchor="end" font-size="16" fill="#ff8a8a" font-weight="700">REC</text>
+      
+      <text x="350" y="384" font-size="18" fill="#cfe9ff">자신감</text>
+      <rect x="480" y="374" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="374" width="258" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="384" font-size="16" fill="#9ad8ff">86%</text>
+      <text x="350" y="424" font-size="18" fill="#cfe9ff">논리력</text>
+      <rect x="480" y="414" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="414" width="216" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="424" font-size="16" fill="#9ad8ff">72%</text>
+      <text x="350" y="464" font-size="18" fill="#cfe9ff">표정 안정도</text>
+      <rect x="480" y="454" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="454" width="276" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="464" font-size="16" fill="#9ad8ff">92%</text>
+      <text x="350" y="504" font-size="18" fill="#cfe9ff">발화 명료도</text>
+      <rect x="480" y="494" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="494" width="234" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="504" font-size="16" fill="#9ad8ff">78%</text>
+      <g stroke="#37f0ff" stroke-opacity="0.5" stroke-width="1.2"><line x1="860" y1="380" x2="920" y2="370"/><line x1="860" y1="380" x2="920" y2="420"/><line x1="860" y1="380" x2="920" y2="470"/><line x1="860" y1="420" x2="920" y2="370"/><line x1="860" y1="420" x2="920" y2="420"/><line x1="860" y1="420" x2="920" y2="470"/><line x1="860" y1="460" x2="920" y2="370"/><line x1="860" y1="460" x2="920" y2="420"/><line x1="860" y1="460" x2="920" y2="470"/><line x1="920" y1="370" x2="980" y2="420"/><line x1="920" y1="420" x2="980" y2="420"/><line x1="920" y1="470" x2="980" y2="420"/></g><g fill="#37f0ff"><circle cx="860" cy="380" r="5"/><circle cx="860" cy="420" r="5"/><circle cx="860" cy="460" r="5"/><circle cx="920" cy="370" r="5"/><circle cx="920" cy="420" r="5"/><circle cx="920" cy="470" r="5"/><circle cx="980" cy="420" r="8"/></g>
+      <text x="350" y="550" font-size="20" fill="#9ad8ff">종합 적합도</text>
+      <rect x="480" y="538" width="300" height="12" rx="6" fill="#1f3a5a"/>
+      <rect x="480" y="538" width="261" height="12" rx="6" fill="#37f0ff"/>
+      <text x="960" y="555" text-anchor="end" font-size="34" font-weight="700" fill="#37f0ff">87%</text>
+    </g>
+    <g>
+      <rect x="76" y="580" width="928" height="300" rx="10" fill="#0a1626" opacity="0.55"/>
+      <rect x="76" y="580" width="928" height="300" rx="10" fill="none" stroke="#37f0ff" stroke-opacity="0.25"/>
+      <circle cx="210" cy="730" r="150" fill="url(#glow)"/>
+      <g transform="translate(140 594) scale(0.9)">
+        <path d="M-10 210 Q70 190 150 210 L150 276 L-10 276 Z" fill="#2f3b52"/>
+        <path d="M45 200 L70 232 L95 200 L95 214 L70 246 L45 214 Z" fill="#ffffff"/>
+        <path d="M62 214 L70 232 L78 214 L70 250 Z" fill="#b23a48"/>
+        <rect x="45" y="165" width="50" height="50" fill="#e8bd97"/>
+        <path d="M45 165 Q70 215 95 165 Z" fill="#d6a67f"/>
+        <ellipse cx="70" cy="105" rx="52" ry="62" fill="#f1caa4"/>
+        <path d="M16 96 Q12 28 70 24 Q128 28 124 96 Q112 70 90 66 Q64 60 44 74 Q28 82 16 96Z" fill="#1f1a1a"/>
+        <ellipse cx="18" cy="110" rx="8" ry="12" fill="#e8bd97"/>
+        <ellipse cx="122" cy="110" rx="8" ry="12" fill="#e8bd97"/>
+        <path d="M38 90 Q52 84 64 90" stroke="#1f1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M76 90 Q88 84 102 90" stroke="#1f1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="51" cy="108" rx="6" ry="6" fill="#2b2b2b"/>
+        <ellipse cx="89" cy="108" rx="6" ry="6" fill="#2b2b2b"/>
+        <circle cx="53" cy="106" r="2" fill="#fff"/><circle cx="91" cy="106" r="2" fill="#fff"/>
+        <path d="M70 116 Q65 132 74 134" stroke="#cf9e78" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M56 146 Q70 154 84 146" stroke="#b9635e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <g fill="none" stroke="#37f0ff" stroke-width="2.5">
+          <path d="M0 30 v-22 h22"/><path d="M140 30 v-22 h-22"/>
+          <path d="M0 170 v22 h22"/><path d="M140 170 v22 h-22"/>
+          <rect x="0" y="8" width="140" height="184" rx="6" stroke-dasharray="6 6" stroke-opacity="0.6"/>
+        </g>
+        <g stroke="#37f0ff" stroke-width="1" stroke-opacity="0.7" fill="none">
+          <polyline points="51,108 70,108 89,108 100,126 89,144 70,150 51,144 40,126 51,108"/>
+          <polyline points="51,108 70,90 89,108 70,130 51,108"/>
+          <polyline points="40,126 70,130 100,126"/><polyline points="51,144 70,164 89,144"/>
+        </g>
+        <g fill="#37f0ff">
+          <circle cx="51" cy="108" r="3"/><circle cx="89" cy="108" r="3"/><circle cx="70" cy="90" r="3"/>
+          <circle cx="70" cy="130" r="3"/><circle cx="40" cy="126" r="3"/><circle cx="100" cy="126" r="3"/>
+          <circle cx="51" cy="144" r="3"/><circle cx="89" cy="144" r="3"/><circle cx="70" cy="164" r="3"/><circle cx="70" cy="150" r="3"/>
+        </g>
+        <rect x="0" y="136" width="140" height="4" fill="url(#scan)"/>
+        <rect x="0" y="136" width="140" height="18" fill="#37f0ff" opacity="0.12"/></g>
+      <text x="350" y="638" font-size="28" font-weight="700" fill="#ffffff">지원자 #02 · 이준서</text>
+      <circle cx="960" cy="630" r="6" fill="#ff5b5b"/><text x="946" y="636" text-anchor="end" font-size="16" fill="#ff8a8a" font-weight="700">REC</text>
+      
+      <text x="350" y="694" font-size="18" fill="#cfe9ff">자신감</text>
+      <rect x="480" y="684" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="684" width="222" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="694" font-size="16" fill="#9ad8ff">74%</text>
+      <text x="350" y="734" font-size="18" fill="#cfe9ff">논리력</text>
+      <rect x="480" y="724" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="724" width="282" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="734" font-size="16" fill="#9ad8ff">94%</text>
+      <text x="350" y="774" font-size="18" fill="#cfe9ff">표정 안정도</text>
+      <rect x="480" y="764" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="764" width="204" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="774" font-size="16" fill="#9ad8ff">68%</text>
+      <text x="350" y="814" font-size="18" fill="#cfe9ff">발화 명료도</text>
+      <rect x="480" y="804" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="804" width="270" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="814" font-size="16" fill="#9ad8ff">90%</text>
+      <g stroke="#37f0ff" stroke-opacity="0.5" stroke-width="1.2"><line x1="860" y1="690" x2="920" y2="680"/><line x1="860" y1="690" x2="920" y2="730"/><line x1="860" y1="690" x2="920" y2="780"/><line x1="860" y1="730" x2="920" y2="680"/><line x1="860" y1="730" x2="920" y2="730"/><line x1="860" y1="730" x2="920" y2="780"/><line x1="860" y1="770" x2="920" y2="680"/><line x1="860" y1="770" x2="920" y2="730"/><line x1="860" y1="770" x2="920" y2="780"/><line x1="920" y1="680" x2="980" y2="730"/><line x1="920" y1="730" x2="980" y2="730"/><line x1="920" y1="780" x2="980" y2="730"/></g><g fill="#37f0ff"><circle cx="860" cy="690" r="5"/><circle cx="860" cy="730" r="5"/><circle cx="860" cy="770" r="5"/><circle cx="920" cy="680" r="5"/><circle cx="920" cy="730" r="5"/><circle cx="920" cy="780" r="5"/><circle cx="980" cy="730" r="8"/></g>
+      <text x="350" y="860" font-size="20" fill="#9ad8ff">종합 적합도</text>
+      <rect x="480" y="848" width="300" height="12" rx="6" fill="#1f3a5a"/>
+      <rect x="480" y="848" width="273" height="12" rx="6" fill="#37f0ff"/>
+      <text x="960" y="865" text-anchor="end" font-size="34" font-weight="700" fill="#37f0ff">91%</text>
+    </g>
+    <g>
+      <rect x="76" y="890" width="928" height="300" rx="10" fill="#0a1626" opacity="0.55"/>
+      <rect x="76" y="890" width="928" height="300" rx="10" fill="none" stroke="#37f0ff" stroke-opacity="0.25"/>
+      <circle cx="210" cy="1040" r="150" fill="url(#glow)"/>
+      <g transform="translate(140 904) scale(0.9)">
+        <path d="M-10 210 Q70 190 150 210 L150 276 L-10 276 Z" fill="#6b5b95"/>
+        <path d="M0 200 Q10 120 30 100 L40 200 Z" fill="#5a3a2a"/>
+        <path d="M140 200 Q130 120 110 100 L100 200 Z" fill="#5a3a2a"/>
+        <rect x="45" y="165" width="50" height="50" fill="#f0c9a6"/>
+        <path d="M45 165 Q70 215 95 165 Z" fill="#dfb08c"/>
+        <path d="M6 100 Q6 20 70 18 Q134 20 134 100 L140 200 L0 200 Z" fill="#5a3a2a"/>
+        <ellipse cx="70" cy="105" rx="52" ry="62" fill="#f6d5b8"/>
+        <path d="M18 96 Q18 30 70 28 Q122 30 122 96 Q118 62 96 62 Q80 58 70 66 Q52 56 34 66 Q22 74 18 96Z" fill="#5a3a2a"/>
+        <ellipse cx="18" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <ellipse cx="122" cy="110" rx="8" ry="12" fill="#f0c9a6"/>
+        <path d="M40 90 Q52 85 62 90" stroke="#4a2f22" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M78 90 Q88 85 100 90" stroke="#4a2f22" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <ellipse cx="51" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <ellipse cx="89" cy="108" rx="6" ry="6.5" fill="#2b2b2b"/>
+        <circle cx="53" cy="106" r="2" fill="#fff"/><circle cx="91" cy="106" r="2" fill="#fff"/>
+        <g fill="none" stroke="#2b2b2b" stroke-width="2.5">
+          <rect x="34" y="97" width="32" height="22" rx="8"/><rect x="74" y="97" width="32" height="22" rx="8"/>
+          <path d="M66 106 Q70 102 74 106"/><path d="M34 104 L22 100"/><path d="M106 104 L118 100"/>
+        </g>
+        <path d="M70 118 Q66 130 72 132" stroke="#d8a887" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M54 144 Q70 158 86 144" stroke="#c9605e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="42" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+        <ellipse cx="98" cy="132" rx="8" ry="4" fill="#f2a9a0" opacity="0.6"/>
+        <g fill="none" stroke="#37f0ff" stroke-width="2.5">
+          <path d="M0 30 v-22 h22"/><path d="M140 30 v-22 h-22"/>
+          <path d="M0 170 v22 h22"/><path d="M140 170 v22 h-22"/>
+          <rect x="0" y="8" width="140" height="184" rx="6" stroke-dasharray="6 6" stroke-opacity="0.6"/>
+        </g>
+        <g stroke="#37f0ff" stroke-width="1" stroke-opacity="0.7" fill="none">
+          <polyline points="51,108 70,108 89,108 100,126 89,144 70,150 51,144 40,126 51,108"/>
+          <polyline points="51,108 70,90 89,108 70,130 51,108"/>
+          <polyline points="40,126 70,130 100,126"/><polyline points="51,144 70,164 89,144"/>
+        </g>
+        <g fill="#37f0ff">
+          <circle cx="51" cy="108" r="3"/><circle cx="89" cy="108" r="3"/><circle cx="70" cy="90" r="3"/>
+          <circle cx="70" cy="130" r="3"/><circle cx="40" cy="126" r="3"/><circle cx="100" cy="126" r="3"/>
+          <circle cx="51" cy="144" r="3"/><circle cx="89" cy="144" r="3"/><circle cx="70" cy="164" r="3"/><circle cx="70" cy="150" r="3"/>
+        </g>
+        <rect x="0" y="60" width="140" height="4" fill="url(#scan)"/>
+        <rect x="0" y="60" width="140" height="18" fill="#37f0ff" opacity="0.12"/></g>
+      <text x="350" y="948" font-size="28" font-weight="700" fill="#ffffff">지원자 #03 · 박서연</text>
+      <circle cx="960" cy="940" r="6" fill="#ff5b5b"/><text x="946" y="946" text-anchor="end" font-size="16" fill="#ff8a8a" font-weight="700">REC</text>
+      
+      <text x="350" y="1004" font-size="18" fill="#cfe9ff">자신감</text>
+      <rect x="480" y="994" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="994" width="240" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="1004" font-size="16" fill="#9ad8ff">80%</text>
+      <text x="350" y="1044" font-size="18" fill="#cfe9ff">논리력</text>
+      <rect x="480" y="1034" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="1034" width="288" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="1044" font-size="16" fill="#9ad8ff">96%</text>
+      <text x="350" y="1084" font-size="18" fill="#cfe9ff">표정 안정도</text>
+      <rect x="480" y="1074" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="1074" width="252" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="1084" font-size="16" fill="#9ad8ff">84%</text>
+      <text x="350" y="1124" font-size="18" fill="#cfe9ff">발화 명료도</text>
+      <rect x="480" y="1114" width="300" height="10" rx="5" fill="#1f3a5a"/>
+      <rect x="480" y="1114" width="186" height="10" rx="5" fill="#37f0ff"/>
+      <text x="795" y="1124" font-size="16" fill="#9ad8ff">62%</text>
+      <g stroke="#37f0ff" stroke-opacity="0.5" stroke-width="1.2"><line x1="860" y1="1000" x2="920" y2="990"/><line x1="860" y1="1000" x2="920" y2="1040"/><line x1="860" y1="1000" x2="920" y2="1090"/><line x1="860" y1="1040" x2="920" y2="990"/><line x1="860" y1="1040" x2="920" y2="1040"/><line x1="860" y1="1040" x2="920" y2="1090"/><line x1="860" y1="1080" x2="920" y2="990"/><line x1="860" y1="1080" x2="920" y2="1040"/><line x1="860" y1="1080" x2="920" y2="1090"/><line x1="920" y1="990" x2="980" y2="1040"/><line x1="920" y1="1040" x2="980" y2="1040"/><line x1="920" y1="1090" x2="980" y2="1040"/></g><g fill="#37f0ff"><circle cx="860" cy="1000" r="5"/><circle cx="860" cy="1040" r="5"/><circle cx="860" cy="1080" r="5"/><circle cx="920" cy="990" r="5"/><circle cx="920" cy="1040" r="5"/><circle cx="920" cy="1090" r="5"/><circle cx="980" cy="1040" r="8"/></g>
+      <text x="350" y="1170" font-size="20" fill="#9ad8ff">종합 적합도</text>
+      <rect x="480" y="1158" width="300" height="12" rx="6" fill="#1f3a5a"/>
+      <rect x="480" y="1158" width="252" height="12" rx="6" fill="#37f0ff"/>
+      <text x="960" y="1175" text-anchor="end" font-size="34" font-weight="700" fill="#37f0ff">84%</text>
+    </g>
+  <text x="540" y="1212" text-anchor="middle" font-size="16" fill="#5fa8d8">표정 · 음성 · 답변 내용을 종합 분석하여 심사위원에게 참고 지표를 제공합니다</text>
+
+  <!-- 책상 -->
+  <g filter="url(#soft)">
+    <path d="M40 1330 L1040 1330 L1080 1440 L0 1440 Z" fill="url(#desk)"/>
+    <path d="M0 1440 L1080 1440 L1080 1520 L0 1520 Z" fill="url(#deskfront)"/>
+  </g>
+  <path d="M40 1330 L1040 1330 L1080 1440 L0 1440 Z" fill="url(#reflect)"/>
+  <!-- 소품 -->
+  <path d="M150 1380 L300 1380 L318 1404 L132 1404 Z" fill="#c2c9d3"/>
+  <path d="M162 1326 L288 1326 L300 1380 L150 1380 Z" fill="#3a4351"/>
+  <path d="M168 1332 L282 1332 L292 1374 L158 1374 Z" fill="#1a3d63"/>
+  <path d="M780 1380 L930 1380 L948 1404 L762 1404 Z" fill="#c2c9d3"/>
+  <path d="M792 1326 L918 1326 L930 1380 L780 1380 Z" fill="#3a4351"/>
+  <path d="M798 1332 L912 1332 L922 1374 L788 1374 Z" fill="#1a3d63"/>
+  <path d="M470 1372 L610 1372 L622 1404 L458 1404 Z" fill="#fff" stroke="#c9d1dc"/>
+  <path d="M482 1380 L598 1380 M484 1388 L596 1388 M486 1396 L590 1396" stroke="#b7c1cf" stroke-width="2"/>
+  <g fill="#e6f4ff" stroke="#9fbfda" stroke-width="2"><path d="M380 1350 L400 1350 L397 1398 L383 1398 Z"/><path d="M690 1350 L710 1350 L707 1398 L693 1398 Z"/></g>
+  <path d="M290 1420 L450 1420 L460 1450 L280 1450 Z" fill="#1d3557"/>
+  <text x="370" y="1441" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">심사위원석</text>
+  <path d="M630 1420 L790 1420 L800 1450 L620 1450 Z" fill="#1d3557"/>
+  <text x="710" y="1441" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">심사위원석</text>
+
+  <!-- 심사위원 3명 (뒷모습) -->
+  
+  <g transform="translate(200 1920) scale(0.85) translate(0 -1000)">
+    <path d="M-120 1000 L-120 830 Q-120 800 -90 800 L90 800 Q120 800 120 830 L120 1000 Z" fill="#4b5563"/>
+    <path d="M-170 720 Q-100 640 0 640 Q100 640 170 720 L170 860 Q170 890 140 890 L-140 890 Q-170 890 -170 860 Z" fill="#d9c3a5"/>
+    <path d="M-22 650 L22 650 L28 780 L-28 780 Z" fill="#c9b08f"/>
+    <rect x="-24" y="590" width="48" height="70" fill="#e9c4a2"/>
+    <path d="M-88 560 Q-92 470 0 460 Q92 470 88 560 L92 660 Q60 700 0 700 Q-60 700 -92 660 Z" fill="#3b2a24"/>
+    <ellipse cx="-90" cy="576" rx="9" ry="13" fill="#e9c4a2"/>
+    <ellipse cx="90" cy="576" rx="9" ry="13" fill="#e9c4a2"/>
+    <circle cx="90" cy="590" r="4" fill="#f5d36b"/><circle cx="-90" cy="590" r="4" fill="#f5d36b"/>
+    <path d="M-70 520 Q-30 560 0 545 Q30 560 70 520" stroke="#2b1c18" stroke-width="3" fill="none" opacity="0.5"/>
+    <path d="M-160 780 Q-200 700 -110 690 L-90 700 Q-140 720 -130 800 Z" fill="#d9c3a5"/>
+    <path d="M160 780 Q200 700 110 690 L90 700 Q140 720 130 800 Z" fill="#d9c3a5"/>
+  </g>
+  <g transform="translate(540 1920) scale(0.85) translate(0 -1000)">
+    <path d="M-120 1000 L-120 830 Q-120 800 -90 800 L90 800 Q120 800 120 830 L120 1000 Z" fill="#4b5563"/>
+    <path d="M-170 720 Q-100 640 0 640 Q100 640 170 720 L170 860 Q170 890 140 890 L-140 890 Q-170 890 -170 860 Z" fill="#1d3557"/>
+    <path d="M-22 650 L22 650 L28 780 L-28 780 Z" fill="#162a45"/>
+    <rect x="-24" y="590" width="48" height="70" fill="#f0c9a6"/>
+    <ellipse cx="0" cy="560" rx="84" ry="98" fill="#1f1a1a"/><circle cx="0" cy="465" r="40" fill="#1f1a1a"/><circle cx="0" cy="465" r="26" fill="none" stroke="#111" stroke-width="3" opacity="0.6"/>
+    <ellipse cx="-90" cy="576" rx="9" ry="13" fill="#f0c9a6"/>
+    <ellipse cx="90" cy="576" rx="9" ry="13" fill="#f0c9a6"/>
+    <circle cx="88" cy="592" r="4" fill="#ffffff"/><circle cx="-88" cy="592" r="4" fill="#ffffff"/>
+    <path d="M-60 470 Q-20 520 0 500 Q20 520 60 470" stroke="#111" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M-160 780 Q-200 700 -110 690 L-90 700 Q-140 720 -130 800 Z" fill="#1d3557"/>
+    <path d="M160 780 Q200 700 110 690 L90 700 Q140 720 130 800 Z" fill="#1d3557"/>
+  </g>
+  <g transform="translate(880 1920) scale(0.85) translate(0 -1000)">
+    <path d="M-120 1000 L-120 830 Q-120 800 -90 800 L90 800 Q120 800 120 830 L120 1000 Z" fill="#4b5563"/>
+    <path d="M-170 720 Q-100 640 0 640 Q100 640 170 720 L170 860 Q170 890 140 890 L-140 890 Q-170 890 -170 860 Z" fill="#7b2d3a"/>
+    <path d="M-22 650 L22 650 L28 780 L-28 780 Z" fill="#5f2029"/>
+    <rect x="-24" y="590" width="48" height="70" fill="#f0c9a6"/>
+    <path d="M-88 560 Q-92 470 0 460 Q92 470 88 560 L104 760 Q60 790 0 780 Q-60 790 -104 760 Z" fill="#6b3d2a"/>
+    <ellipse cx="-90" cy="576" rx="9" ry="13" fill="#f0c9a6"/>
+    <ellipse cx="90" cy="576" rx="9" ry="13" fill="#f0c9a6"/>
+    
+    <path d="M-70 600 Q-90 660 -60 700 Q-95 730 -70 770" stroke="#4e2a1c" stroke-width="4" fill="none" opacity="0.6"/><path d="M70 600 Q90 660 60 700 Q95 730 70 770" stroke="#4e2a1c" stroke-width="4" fill="none" opacity="0.6"/>
+    <path d="M-160 780 Q-200 700 -110 690 L-90 700 Q-140 720 -130 800 Z" fill="#7b2d3a"/>
+    <path d="M160 780 Q200 700 110 690 L90 700 Q140 720 130 800 Z" fill="#7b2d3a"/>
+  </g>
+  <g fill="#0b1a33" opacity="0.14" filter="url(#blur)">
+    <ellipse cx="200" cy="1880" rx="150" ry="22"/><ellipse cx="540" cy="1880" rx="150" ry="22"/><ellipse cx="880" cy="1880" rx="150" ry="22"/>
+  </g>
+  <rect width="1080" height="1920" fill="url(#vignette)"/>
+</svg>
