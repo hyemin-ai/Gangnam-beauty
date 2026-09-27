@@ -108,8 +108,9 @@ def first_clean_hit(x, max_seconds):
             onsets.append(i)
     if len(onsets) <= 1:
         return x
-    # 가장 센 타격 3개 중, 다음 타격까지 간격이 가장 긴 것 (여운이 잘 남아 있는 것)
-    strong = sorted(onsets, key=lambda i: -env[i:i + 4].max())[:3]
+    # 충분히 센 타격(가장 센 것의 70% 이상) 중, 다음 타격까지 간격이 가장 긴 것 = 여운이 온전히 남은 것
+    top = max(env[i:i + 4].max() for i in onsets)
+    strong = [i for i in onsets if env[i:i + 4].max() >= top * 0.7]
     gaps = {i: (onsets[onsets.index(i) + 1] - i if onsets.index(i) + 1 < len(onsets) else len(env) - i) for i in strong}
     pick = max(strong, key=lambda i: gaps[i])
     start = max(0, pick * hop - int(SR * 0.01))
@@ -132,7 +133,7 @@ def load_recording(name, single_hit=False, max_seconds=1.5):
     level = np.abs(x).max(axis=1)
     loud = np.nonzero(level > level.max() * 0.03)[0]  # 앞뒤 무음 자르기 (약 -30dB)
     start = max(0, loud[0] - int(SR * 0.005))
-    end = min(len(x), loud[-1] + int(SR * 0.3))
+    end = len(x) if single_hit else min(len(x), loud[-1] + int(SR * 0.3))  # 한 번 친 소리는 여운을 끝까지
     x = x[start:end]
     x[: int(SR * 0.003)] *= np.linspace(0, 1, int(SR * 0.003))[:, None]
     print(f"  녹음 사용: {os.path.relpath(files[0], OUT)}")
