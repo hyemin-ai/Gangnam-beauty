@@ -1,6 +1,6 @@
 // 오프라인에서도 앱이 열리도록 파일을 휴대폰에 저장해 두는 서비스 워커.
 // 앱 파일을 고친 뒤에는 VERSION 숫자를 올려야 사용자 휴대폰에 새 버전이 반영된다.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CORE = `hapjang-core-${VERSION}`;
 const LONG = `hapjang-long-${VERSION}`; // 타이머용 긴 소리 파일 (처음 쓸 때 저장)
 const FONTS = 'hapjang-fonts';
@@ -84,11 +84,28 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // 나머지 앱 파일: 저장된 것을 먼저 쓰고, 없으면 인터넷에서
+  // 소리·그림: 잘 안 바뀌고 크기가 있으니 저장된 것을 먼저 쓴다
+  if (/\.(mp3|png)$/.test(url.pathname)) {
+    e.respondWith(
+      caches.match(req, { ignoreSearch: true }).then((hit) => {
+        if (hit) return req.headers.get('range') && url.pathname.endsWith('.mp3') ? rangeResponse(req, hit) : hit;
+        return fetch(req);
+      }),
+    );
+    return;
+  }
+
+  // 화면·코드(html, css, js): 인터넷에서 최신 것을 먼저 받고, 안 되면(오프라인) 저장된 것을 쓴다.
+  // 이렇게 해야 앱을 고쳤을 때 휴대폰에 바로 반영된다.
   e.respondWith(
-    caches.match(req, { ignoreSearch: true }).then((hit) => {
-      if (hit) return req.headers.get('range') && url.pathname.endsWith('.mp3') ? rangeResponse(req, hit) : hit;
-      return fetch(req);
-    }),
+    fetch(req)
+      .then((res) => {
+        if (res.ok) {
+          const copy = res.clone();
+          caches.open(CORE).then((c) => c.put(req, copy));
+        }
+        return res;
+      })
+      .catch(() => caches.match(req, { ignoreSearch: true })),
   );
 });
