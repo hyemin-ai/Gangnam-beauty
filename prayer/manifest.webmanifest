@@ -1,17 +1,26 @@
 {
+  "id": "./",
   "name": "만트라 — 염주·목탁·싱잉볼",
   "short_name": "만트라",
-  "description": "휴대폰 하나로 하는 염주·목탁·싱잉볼 기도",
+  "description": "휴대폰 하나로 하는 염주·목탁·싱잉볼 기도와 명상. 광고 없이 조용하고 단순하게.",
   "lang": "ko",
+  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#000000",
   "theme_color": "#000000",
+  "categories": ["lifestyle", "health"],
   "icons": [
     { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "store/screenshots/1-beads.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "염주: 소원을 띄워 두고 한 알씩" },
+    { "src": "store/screenshots/2-moktak.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "목탁: 누르면 채가 톡" },
+    { "src": "store/screenshots/3-bowl.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "싱잉볼: 명상 타이머" },
+    { "src": "store/screenshots/4-temple.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "사찰: 인기 사찰과 방문 기록" }
   ]
 }
