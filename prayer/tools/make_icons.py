@@ -1,7 +1,8 @@
 """앱 아이콘: 검정 바탕 위 러블리한 3D 핑크 하트(금빛·은빛이 도는 무광 메탈 느낌) + 'mantra' 글씨.
 
 사용법:  pip install numpy pillow  →  python3 prayer/tools/make_icons.py
-결과물:  prayer/icons/icon-192.png, icon-512.png, apple-touch-icon.png (180), icon-1024.png (원본 크기)
+결과물:  prayer/icons/icon-192.png, icon-512.png, apple-touch-icon.png (180), icon-1024.png (원본 크기),
+         icon-maskable-512.png (안드로이드가 동그랗게 잘라도 하트가 잘리지 않도록 여백을 더 둔 것)
 
 글씨체: Yellowtail (Apache License 2.0, tools/fonts/ 에 라이선스 포함) — 굵고 매끈한 필기체.
 하트는 make_objects.py 와 같은 방식(레이마칭)으로 3D 계산해 그린다.
@@ -128,6 +129,12 @@ def main():
     for name, size in (("icon-512.png", 512), ("icon-192.png", 192), ("apple-touch-icon.png", 180)):
         icon.resize((size, size), Image.LANCZOS).save(os.path.join(OUT, name), optimize=True)
         print(name)
+    # 안드로이드 '마스크' 아이콘: 가운데 80% 원 안에 모든 내용이 들어가야 하므로 72%로 줄여 가운데에
+    small = icon.resize((int(S * 0.72), int(S * 0.72)), Image.LANCZOS)
+    mask = background().convert("RGB")
+    mask.paste(small, ((S - small.width) // 2, (S - small.height) // 2))
+    mask.resize((512, 512), Image.LANCZOS).save(os.path.join(OUT, "icon-maskable-512.png"), optimize=True)
+    print("icon-maskable-512.png")
 
 
 if __name__ == "__main__":
