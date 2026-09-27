@@ -339,7 +339,7 @@ function startTimer() {
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: `싱잉볼 · ${m}분 간격`,
-        artist: '합장',
+        artist: '만트라',
         artwork: [{ src: 'icons/icon-512.png', sizes: '512x512', type: 'image/png' }],
       });
       navigator.mediaSession.setActionHandler('play', startTimer);
@@ -404,6 +404,19 @@ function el(tag, props = {}, ...kids) {
   Object.assign(e, props);
   e.append(...kids);
   return e;
+}
+
+// 인기 사찰 (괄호 안: 예로부터 잘 들어준다고 전해지는 소원)
+const POPULAR = [
+  { name: '팔공산 갓바위', tags: '시험합격' },
+  { name: '강화 보문사', tags: '재물·사업' },
+  { name: '낙산사 홍련암', tags: '건강·가족' },
+];
+function renderPopular() {
+  $('#popular').replaceChildren(...POPULAR.map((t) => el('li', {},
+    el('span', { className: 'name' }, t.name, el('span', { className: 'tags', textContent: ` (${t.tags})` })),
+    el('button', { className: 'text-btn', textContent: '지도', onclick: () => kakaoSearch(t.name) }),
+  )));
 }
 
 function renderFavs() {
@@ -531,8 +544,8 @@ $('#set-haptic').addEventListener('change', (e) => { S.settings.haptic = e.targe
 $('#set-click').addEventListener('change', (e) => { S.settings.click = e.target.checked; save(); });
 
 $('#backup-export').addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify({ app: 'hapjang', version: 1, savedAt: new Date().toISOString(), data: S }, null, 2)], { type: 'application/json' });
-  const a = el('a', { href: URL.createObjectURL(blob), download: `hapjang-backup-${today()}.json` });
+  const blob = new Blob([JSON.stringify({ app: 'mantra', version: 1, savedAt: new Date().toISOString(), data: S }, null, 2)], { type: 'application/json' });
+  const a = el('a', { href: URL.createObjectURL(blob), download: `mantra-backup-${today()}.json` });
   document.body.append(a);
   a.click();
   a.remove();
@@ -545,7 +558,7 @@ $('#backup-file').addEventListener('change', async (e) => {
   if (!file) return;
   try {
     const json = JSON.parse(await file.text());
-    if (!json || json.app !== 'hapjang' || typeof json.data !== 'object') throw new Error('형식 오류');
+    if (!json || !['mantra', 'hapjang'].includes(json.app) || typeof json.data !== 'object') throw new Error('형식 오류');
     if (!confirm('지금 기록을 백업 파일의 내용으로 바꿀까요?')) return;
     S = merge(DEFAULTS, json.data);
     save();
@@ -561,6 +574,7 @@ function renderAll() {
   renderWish();
   buildMala();
   renderBowl();
+  renderPopular();
   renderFavs();
   renderVisits();
   showTab(S.tab);
