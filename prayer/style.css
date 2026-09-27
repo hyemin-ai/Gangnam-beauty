@@ -291,8 +291,8 @@ h3 { font-family: var(--cute); font-weight: 400; font-size: 16px; margin: 22px 0
 }
 .search input:focus { outline: 2px solid var(--accent-soft); }
 .search button { background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 0 18px; font-family: var(--cute); font-size: 15px; white-space: nowrap; }
-.favs, .visits { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.favs li, .visits li { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 18px; background: var(--card); }
+.popular, .favs, .visits { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.popular li, .favs li, .visits li { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 18px; background: var(--card); }
 .favs .rank {
   width: 28px;
   height: 28px;
@@ -305,7 +305,7 @@ h3 { font-family: var(--cute); font-weight: 400; font-size: 16px; margin: 22px 0
   font-family: var(--cute);
   font-size: 15px;
 }
-.favs .name, .visits .name { flex: 1; min-width: 0; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.popular .name, .favs .name, .visits .name { flex: 1; min-width: 0; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .favs .empty { color: var(--muted); font-size: 14px; }
 .favs li:has(.empty) .rank { background: var(--soft); color: var(--muted); }
 .text-btn { font-size: 14px; color: var(--accent); padding: 6px 6px; }
@@ -320,7 +320,7 @@ h3 { font-family: var(--cute); font-weight: 400; font-size: 16px; margin: 22px 0
 .tabs {
   display: flex;
   gap: 4px;
-  margin: 0 12px calc(env(safe-area-inset-bottom) + 10px);
+  margin: 0 12px 2px;
   padding: 6px;
   border-radius: 26px;
   background: var(--card);
@@ -373,5 +373,20 @@ dialog .check { margin: 12px 0; font-size: 15px; }
 .actions .text-btn { color: var(--fg); }
 .actions .danger { color: #ff9a8a; }
 .primary:focus-visible, .text-btn:focus-visible, .tabs button:focus-visible, .segmented button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 만든 사람: 아주 작고 흐리게 (자세히 봐야 보임) */
+.credit {
+  display: block;
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  padding: 4px 0 calc(env(safe-area-inset-bottom) + 6px);
+  color: rgba(255, 255, 255, 0.16);
+  text-decoration: none;
+}
+.popular .tags { color: var(--accent); font-size: 14px; }
+.popular .name { white-space: normal; }
+.note.tiny { font-size: 12px; margin: 6px 4px 0; }
 
 .ios-haptic { position: fixed; left: -100px; top: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
