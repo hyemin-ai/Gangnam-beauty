@@ -15,12 +15,12 @@
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Song+Myung&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="top">
-    <h1 id="title">염주</h1>
+    <h1><svg class="lotus" viewBox="0 0 32 22" aria-hidden="true"><path d="M16 2c3 4 3 10 0 16-3-6-3-12 0-16z"/><path d="M16 18C12 15 7 9 4 8c0 5 5 10 12 10zM16 18c4-3 9-9 12-10 0 5-5 10-12 10z"/><path d="M16 18c-5 1-10 0-14-2 3 3 8 5 14 4 6 1 11-1 14-4-4 2-9 3-14 2z"/></svg><span id="title">염주</span></h1>
     <button class="icon-btn" id="open-settings" aria-label="설정">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>
     </button>
@@ -36,6 +36,7 @@
       </div>
       <div class="tap-area" id="bead-tap" aria-label="눌러서 한 알 넘기기" role="button">
         <div class="mala-wrap">
+          <div class="halo" aria-hidden="true"></div>
           <svg class="mala" id="mala" viewBox="-160 -160 320 320" aria-hidden="true">
             <g id="mala-ring"></g>
             <path class="marker" d="M0 -154 l-6 -9 h12 z"/>
@@ -43,10 +44,11 @@
           <div class="count-box">
             <div class="count" id="bead-count">0</div>
             <div class="sub" id="bead-sub">108 중</div>
+            <svg class="lotus pop" id="round-pop" viewBox="0 0 32 22" aria-hidden="true"><path d="M16 2c3 4 3 10 0 16-3-6-3-12 0-16z"/><path d="M16 18C12 15 7 9 4 8c0 5 5 10 12 10zM16 18c4-3 9-9 12-10 0 5-5 10-12 10z"/></svg>
           </div>
         </div>
         <p class="stats" id="bead-stats"></p>
-        <p class="hint">화면 어디든 누르면 한 알씩 넘어갑니다</p>
+        <p class="hint">화면 어디든 톡 누르면 한 알씩 넘어가요</p>
       </div>
       <button class="hold-btn" id="bead-reset"><span class="fill"></span><span class="label">길게 눌러 이번 바퀴 초기화</span></button>
     </section>
@@ -54,31 +56,20 @@
     <!-- 2. 목탁 -->
     <section class="view" id="view-moktak" data-title="목탁" hidden>
       <div class="tap-area center" id="moktak-tap" role="button" aria-label="목탁 치기">
-        <svg class="art" id="moktak-art" viewBox="0 0 240 200" aria-hidden="true">
-          <path d="M30 124c0-50 40-86 92-86s92 36 92 86c0 36-40 58-92 58s-92-22-92-58z"/>
-          <path d="M62 132c16 7 104 7 120 0c4-2 6 3 2 5c-24 12-100 12-124 0c-4-2-2-7 2-5z"/>
-          <path d="M98 42c-2-20 10-30 24-30s26 10 24 30"/>
-          <path d="M236 6 194 52" class="stick"/>
-          <ellipse cx="189" cy="58" rx="9" ry="6" class="stick" transform="rotate(-48 189 58)"/>
-        </svg>
-        <p class="hint">목탁을 누르세요</p>
+        <div class="stage"><img class="art" id="moktak-art" src="images/moktak.png" alt="" draggable="false"><img class="mallet" id="moktak-mallet" src="images/mallet.png" alt="" draggable="false"></div>
+        <p class="hint">목탁을 톡 쳐 보세요</p>
       </div>
     </section>
 
     <!-- 3. 싱잉볼 -->
     <section class="view" id="view-bowl" data-title="싱잉볼" hidden>
       <div class="tap-area center small" id="bowl-tap" role="button" aria-label="싱잉볼 치기">
-        <svg class="art" id="bowl-art" viewBox="0 0 240 170" aria-hidden="true">
-          <ellipse cx="120" cy="52" rx="86" ry="14"/>
-          <path d="M34 52c4 50 38 82 86 82s82-32 86-82"/>
-          <path d="M58 140c20 14 104 14 124 0 8 10-8 20-62 20s-70-10-62-20z"/>
-          <path d="M20 20 70 44" class="stick"/>
-        </svg>
-        <p class="hint">싱잉볼을 누르세요</p>
+        <div class="stage"><img class="art" id="bowl-art" src="images/bowl.png" alt="" draggable="false"><img class="mallet" id="bowl-mallet" src="images/felt-mallet.png" alt="" draggable="false"></div>
+        <p class="hint">싱잉볼을 살며시 눌러 보세요</p>
       </div>
 
       <div class="timer">
-        <p class="label">간격마다 자동으로 울림</p>
+        <p class="label">정해진 간격마다 자동으로 울려요</p>
         <div class="segmented" id="bowl-interval" role="radiogroup" aria-label="간격">
           <button data-m="5" role="radio">5분</button>
           <button data-m="15" role="radio">15분</button>
@@ -87,7 +78,7 @@
         <p class="countdown" id="bowl-countdown">&nbsp;</p>
         <button class="primary" id="bowl-start">시작</button>
         <label class="check"><input type="checkbox" id="bowl-wake"> 화면 켜둔 채로 명상</label>
-        <p class="note">화면이 꺼져도 울리지만, 다른 앱에서 음악을 틀면 멈출 수 있습니다.</p>
+        <p class="note">화면이 꺼져도 울려요. 다른 앱에서 음악을 틀면 멈출 수 있어요.</p>
       </div>
     </section>
 
@@ -110,10 +101,10 @@
   </main>
 
   <nav class="tabs" id="tabs">
-    <button data-view="beads">염주</button>
-    <button data-view="moktak">목탁</button>
-    <button data-view="bowl">싱잉볼</button>
-    <button data-view="temple">사찰</button>
+    <button data-view="beads"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2.2"/><circle cx="18.2" cy="8" r="2"/><circle cx="18.2" cy="15.5" r="2"/><circle cx="12" cy="19.5" r="2"/><circle cx="5.8" cy="15.5" r="2"/><circle cx="5.8" cy="8" r="2"/></svg>염주</button>
+    <button data-view="moktak"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6.5a2.5 2.5 0 0 1 5 0"/><ellipse cx="12" cy="13.5" rx="8" ry="7"/><path d="M7 14.5h10"/></svg>목탁</button>
+    <button data-view="bowl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9.5h17c0 5-3.8 8.5-8.5 8.5s-8.5-3.5-8.5-8.5z"/><path d="M6 20.5h12"/></svg>싱잉볼</button>
+    <button data-view="temple"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 4l9.5 5.5"/><path d="M4.5 9.5c0 1 1 1.8 2 1.8h11c1 0 2-.8 2-1.8"/><path d="M6.5 11.5V19M17.5 11.5V19M4 19.5h16M10 19v-4h4v4"/></svg>사찰</button>
   </nav>
 
   <!-- 방문 기록 작성 -->
@@ -176,7 +167,7 @@
       <h3>홈 화면에 설치</h3>
       <p class="note">아이폰: Safari 공유 버튼 → ‘홈 화면에 추가’<br>안드로이드: Chrome 메뉴(⋮) → ‘홈 화면에 추가’ 또는 ‘앱 설치’</p>
       <h3>정보</h3>
-      <p class="note">목탁·싱잉볼·염주 소리와 구슬 그림은 이 앱에서 직접 만들었습니다. 글꼴: 고운바탕, 송명 (SIL Open Font License).</p>
+      <p class="note">소리와 구슬·목탁·싱잉볼 그림은 모두 이 앱에서 직접 만들었습니다. 글꼴: 주아, 고운돋움 (SIL Open Font License).</p>
       <div class="actions">
         <span class="spacer"></span>
         <button value="close" class="primary">닫기</button>

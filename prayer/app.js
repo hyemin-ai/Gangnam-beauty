@@ -204,6 +204,7 @@ onTap($('#bead-tap'), () => {
     play('bowl', 0.6);
     haptic([40, 70, 40, 70, 40]);
     flash($('.count-box'), 'pulse', 900);
+    flash($('#round-pop'), 'show', 1400);
   } else {
     haptic(8);
   }
@@ -266,14 +267,16 @@ wishDialog.addEventListener('close', () => {
 onTap($('#moktak-tap'), () => {
   play('moktak');
   haptic(12);
-  flash($('#moktak-art'), 'hit', 90);
+  flash($('#moktak-mallet'), 'strike', 70);
+  flash($('#moktak-art'), 'hit', 110);
 });
 
 /* ───────── 3. 싱잉볼 ───────── */
 onTap($('#bowl-tap'), () => {
   play('bowl');
   haptic(20);
-  flash($('#bowl-art'), 'hit', 120);
+  flash($('#bowl-mallet'), 'strike', 70);
+  flash($('#bowl-art'), 'hit', 160);
 });
 
 // 타이머: 'N분짜리 소리 파일(종 한 번 + 무음)'을 반복 재생한다.
@@ -430,7 +433,7 @@ function renderVisits() {
         el('span', { className: 'name', textContent: v.name }),
         el('span', { className: 'date', textContent: v.date.replaceAll('-', '. ') })),
     );
-    if (v.wish) li.append(el('div', { className: 'wish', textContent: v.wish }));
+    if (v.wish) li.append(el('div', { className: 'v-wish', textContent: v.wish }));
     ul.append(li);
   }
 }

@@ -10,6 +10,7 @@
   prayer/sounds/src/ 폴더에 bowl / moktak / click 이름으로 녹음 파일(.mp3 .wav .flac .ogg)을 넣고
   이 스크립트를 다시 실행하면, 합성 소리 대신 그 녹음을 다듬어(앞 무음 자르기·음량 맞추기) 사용한다.
   예) prayer/sounds/src/bowl.mp3  →  bowl.mp3와 타이머 파일 3개가 모두 이 녹음으로 바뀐다.
+  목탁·딸깍은 여러 번 친 녹음이어도 괜찮다. 가장 또렷한 '한 번 친 소리'만 자동으로 잘라 쓴다.
   녹음 파일은 반드시 CC0 등 자유 이용이 가능한 것만 쓸 것 (Pixabay, Freesound의 CC0 등).
 
 ■ 녹음이 없으면: 실제 악기의 떨림 방식(배음 비율, 맥놀이, 채가 닿는 순간, 공간 울림)을
@@ -93,18 +94,46 @@ def fade_out(x, seconds, sr=SR):
     return x * (env[:, None] if x.ndim == 2 else env)
 
 
-def load_recording(name):
-    """src 폴더의 녹음 파일을 읽어 (길이, 2) 배열로. 없으면 None."""
+def first_clean_hit(x, max_seconds):
+    """여러 번 친 녹음에서 '한 번 친 소리'만 잘라낸다.
+    소리 크기가 갑자기 커지는 순간(타격)들을 찾고, 가장 또렷한 타격 하나를
+    다음 타격 직전까지(최대 max_seconds) 잘라 끝을 부드럽게 줄인다."""
+    mono = np.abs(x).max(axis=1)
+    hop = int(SR * 0.005)
+    env = np.array([mono[i:i + hop].max() for i in range(0, len(mono) - hop, hop)])
+    peak = env.max()
+    onsets = []
+    for i in range(2, len(env)):
+        if env[i] > peak * 0.3 and env[i] > env[i - 2] * 3 and (not onsets or i - onsets[-1] > 20):
+            onsets.append(i)
+    if len(onsets) <= 1:
+        return x
+    # 충분히 센 타격(가장 센 것의 70% 이상) 중, 다음 타격까지 간격이 가장 긴 것 = 여운이 온전히 남은 것
+    top = max(env[i:i + 4].max() for i in onsets)
+    strong = [i for i in onsets if env[i:i + 4].max() >= top * 0.7]
+    gaps = {i: (onsets[onsets.index(i) + 1] - i if onsets.index(i) + 1 < len(onsets) else len(env) - i) for i in strong}
+    pick = max(strong, key=lambda i: gaps[i])
+    start = max(0, pick * hop - int(SR * 0.01))
+    end = min(len(x), start + int(SR * max_seconds), start + gaps[pick] * hop - int(SR * 0.02))
+    print(f"  타격 {len(onsets)}번 중 {onsets.index(pick) + 1}번째를 사용 ({(end - start) / SR:.2f}초)")
+    return x[start:end]
+
+
+def load_recording(name, single_hit=False, max_seconds=1.5):
+    """src 폴더의 녹음 파일을 읽어 (길이, 2) 배열로. 없으면 None.
+    single_hit=True면 여러 번 친 녹음에서 한 번 친 소리만 골라낸다."""
     files = sorted(glob.glob(os.path.join(SRC, name + ".*")))
     if not files:
         return None
     import miniaudio
     d = miniaudio.decode_file(files[0], output_format=miniaudio.SampleFormat.FLOAT32, nchannels=2, sample_rate=SR)
     x = np.frombuffer(d.samples, dtype=np.float32).reshape(-1, 2).astype(np.float64)
+    if single_hit:
+        x = first_clean_hit(x, max_seconds)
     level = np.abs(x).max(axis=1)
     loud = np.nonzero(level > level.max() * 0.03)[0]  # 앞뒤 무음 자르기 (약 -30dB)
     start = max(0, loud[0] - int(SR * 0.005))
-    end = min(len(x), loud[-1] + int(SR * 0.3))
+    end = len(x) if single_hit else min(len(x), loud[-1] + int(SR * 0.3))  # 한 번 친 소리는 여운을 끝까지
     x = x[start:end]
     x[: int(SR * 0.003)] *= np.linspace(0, 1, int(SR * 0.003))[:, None]
     print(f"  녹음 사용: {os.path.relpath(files[0], OUT)}")
@@ -153,21 +182,31 @@ def bowl():
 
 
 def moktak():
-    """목탁: 속이 빈 나무통의 공명(낮은 '톡')과 나무 몸통의 짧은 떨림, 나무 채가 닿는 순간,
-    치는 순간 음이 살짝 내려가는 나무 특유의 성질, 법당 같은 짧은 울림."""
-    sec = 0.9
+    """목탁: 단단한 나무통을 나무 채로 '똑' 친 맑은 소리.
+    - 속 빈 나무통의 뚜렷한 음(약 800Hz)이 짧게 맑게 울리고
+    - 나무 특유의 비조화 배음(약 2.6배, 4.8배)이 빠르게 사라지며
+    - 단단한 채라서 치는 순간이 또렷하고
+    - 법당처럼 넓은 공간에 은은하게 퍼지는 울림을 더했다."""
+    sec = 1.6
     t = np.arange(int(SR * sec)) / SR
-    glide = 1 + 0.035 * np.exp(-t / 0.012)  # 처음 몇 ms 동안 음이 살짝 높다가 내려옴
-    parts = [(612.0, 1.0, 0.085), (1290.0, 0.45, 0.032), (2170.0, 0.22, 0.016), (3380.0, 0.12, 0.009), (318.0, 0.35, 0.05)]
+    glide = 1 + 0.015 * np.exp(-t / 0.008)  # 치는 순간 음이 아주 살짝 높았다가 자리 잡음
+    parts = [
+        (812.0, 1.0, 0.16),    # 나무통의 주된 울림 (맑은 '똑')
+        (406.0, 0.28, 0.07),   # 통 안 공기의 낮은 울림
+        (2115.0, 0.32, 0.045),
+        (3890.0, 0.14, 0.02),
+        (5620.0, 0.06, 0.009),
+    ]
     x = np.zeros_like(t)
     for f, a, tau in parts:
         phase = 2 * np.pi * np.cumsum(f * glide) / SR
         x += a * np.exp(-t / tau) * np.sin(phase)
-    x = strike(x, 0.9)
+    x = strike(x, 0.5)
     rng = np.random.default_rng(3)
-    knock = rng.standard_normal(int(SR * 0.004)) * np.exp(-np.arange(int(SR * 0.004)) / (SR * 0.0012))
-    x[: len(knock)] += 0.25 * lowpass(knock, 3500)
-    return fade_out(room(x, 0.9, 0.18), 0.25)
+    n = int(SR * 0.002)
+    tick = rng.standard_normal(n) * np.exp(-np.arange(n) / (SR * 0.0005))
+    x[:n] += 0.12 * tick
+    return fade_out(room(x, 1.8, 0.24), 0.3)
 
 
 def click():
@@ -179,9 +218,9 @@ def click():
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    rec_click = load_recording("click")
+    rec_click = load_recording("click", single_hit=True, max_seconds=0.15)
     encode(rec_click if rec_click is not None else click(), os.path.join(OUT, "click.mp3"), 96)
-    rec_moktak = load_recording("moktak")
+    rec_moktak = load_recording("moktak", single_hit=True, max_seconds=1.5)
     encode(rec_moktak if rec_moktak is not None else moktak(), os.path.join(OUT, "moktak.mp3"), 128)
     rec_bowl = load_recording("bowl")
     ring = rec_bowl if rec_bowl is not None else bowl()

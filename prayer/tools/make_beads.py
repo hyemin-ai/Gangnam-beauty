@@ -113,8 +113,8 @@ def make(name, **wood):
 def main():
     os.makedirs(OUT, exist_ok=True)
     # 구슬: 따뜻한 갈색 단향목 느낌 / 모주: 짙은 자단 느낌
-    make("bead", dark=(92, 50, 26), light=(176, 112, 62), grain_freq=5.5, seed=21, gloss=0.55)
-    make("head", dark=(52, 22, 14), light=(120, 58, 34), grain_freq=4.0, seed=108, gloss=0.8)
+    make("bead", dark=(128, 74, 38), light=(222, 156, 92), grain_freq=5.5, seed=21, gloss=0.6)
+    make("head", dark=(96, 36, 20), light=(176, 84, 46), grain_freq=4.0, seed=108, gloss=0.85)
 
 
 if __name__ == "__main__":
