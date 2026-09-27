@@ -1,7 +1,7 @@
 """염주 구슬 이미지(PNG, 투명 배경)를 만든다.
 
 사용법:  pip install numpy pillow  →  python3 prayer/tools/make_beads.py
-결과물:  prayer/images/bead.png  (구슬)   prayer/images/head.png  (모주: 큰 구슬)
+결과물:  prayer/images/bead.webp  (구슬)   prayer/images/head.webp  (모주: 큰 구슬)
 
 ■ 진짜 사진으로 바꾸기
   prayer/images/src/ 폴더에 bead.jpg(또는 .png), head.jpg 를 넣고 다시 실행하면
@@ -105,9 +105,9 @@ def from_photo(path):
 def make(name, **wood):
     photos = sorted(glob.glob(os.path.join(SRC, name + ".*")))
     img = from_photo(photos[0]) if photos else render(**wood)
-    path = os.path.join(OUT, name + ".png")
-    img.save(path, optimize=True)
-    print(f"{name}.png  {os.path.getsize(path) / 1024:.0f} KB")
+    path = os.path.join(OUT, name + ".webp")
+    img.save(path, "WEBP", quality=88, method=6)
+    print(f"{name}.webp  {os.path.getsize(path) / 1024:.0f} KB")
 
 
 def main():

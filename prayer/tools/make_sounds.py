@@ -168,7 +168,7 @@ def bowl():
     taus = [11.0, 6.5, 3.4, 1.7, 0.9, 0.45]
     beats = [0.75, 1.9, 3.2, 4.4, 5.6, 7.0]
     freqs = [f0 * r for r in ratios]
-    sec = 26.0
+    sec = 22.0
     # 좌우 채널의 맥놀이 위상을 다르게 해서 소리가 공간에서 천천히 도는 느낌
     left = modes(freqs, amps, taus, sec, beats, phases=[0.0, 1.1, 2.3, 0.4, 1.9, 2.8])
     right = modes(freqs, amps, taus, sec, beats, phases=[1.4, 0.2, 0.9, 2.6, 0.7, 1.3])
@@ -224,7 +224,7 @@ def main():
     encode(rec_moktak if rec_moktak is not None else moktak(), os.path.join(OUT, "moktak.mp3"), 128)
     rec_bowl = load_recording("bowl")
     ring = rec_bowl if rec_bowl is not None else bowl()
-    encode(ring, os.path.join(OUT, "bowl.mp3"), 128)
+    encode(ring, os.path.join(OUT, "bowl.mp3"), 96)
     # 타이머용 긴 파일: 종 한 번 + 무음으로 정확히 N분. 용량을 줄이려고 22kHz·40kbps 모노
     sr = 22050
     mono = ring.mean(axis=1) if ring.ndim == 2 else ring

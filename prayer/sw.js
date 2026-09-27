@@ -1,6 +1,6 @@
 // 오프라인에서도 앱이 열리도록 파일을 휴대폰에 저장해 두는 서비스 워커.
 // 앱 파일을 고친 뒤에는 VERSION 숫자를 올려야 사용자 휴대폰에 새 버전이 반영된다.
-const VERSION = 'v6';
+const VERSION = 'v7';
 const CORE = `hapjang-core-${VERSION}`;
 const LONG = `hapjang-long-${VERSION}`; // 타이머용 긴 소리 파일 (처음 쓸 때 저장)
 const FONTS = 'hapjang-fonts';
@@ -16,14 +16,14 @@ const CORE_FILES = [
   'icons/apple-touch-icon.png',
   'sounds/click.mp3',
   'sounds/moktak.mp3',
-  'sounds/bowl.mp3',
-  'images/bead.png',
-  'images/head.png',
-  'images/moktak.png',
-  'images/bowl.png',
-  'images/mallet.png',
-  'images/felt-mallet.png',
+  'images/bead.webp',
+  'images/head.webp',
+  'images/moktak.webp',
+  'images/bowl.webp',
+  'images/mallet.webp',
+  'images/felt-mallet.webp',
 ];
+// sounds/bowl.mp3(약 260KB)는 설치 때 받지 않고, 처음 쓸 때 받아서 저장한다
 
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CORE).then((c) => c.addAll(CORE_FILES)).then(() => self.skipWaiting()));
@@ -88,12 +88,18 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // 소리·그림: 잘 안 바뀌고 크기가 있으니 저장된 것을 먼저 쓴다
-  if (/\.(mp3|png)$/.test(url.pathname)) {
+  // 소리·그림: 잘 안 바뀌고 크기가 있으니 저장된 것을 먼저 쓰고, 없으면 받아서 저장해 둔다
+  if (/\.(mp3|png|webp)$/.test(url.pathname)) {
     e.respondWith(
       caches.match(req, { ignoreSearch: true }).then((hit) => {
         if (hit) return req.headers.get('range') && url.pathname.endsWith('.mp3') ? rangeResponse(req, hit) : hit;
-        return fetch(req);
+        return fetch(req).then((res) => {
+          if (res.status === 200) {
+            const copy = res.clone();
+            caches.open(CORE).then((c) => c.put(req, copy)).catch(() => {});
+          }
+          return res;
+        });
       }),
     );
     return;

@@ -1,7 +1,8 @@
 """목탁·싱잉볼 이미지(PNG, 투명 배경)를 3D로 계산해 그린다.
 
 사용법:  pip install numpy pillow  →  python3 prayer/tools/make_objects.py
-결과물:  prayer/images/moktak.png (목탁), mallet.png (목탁 채), bowl.png (싱잉볼), felt-mallet.png (싱잉볼 채)
+결과물:  prayer/images/moktak.webp (목탁), mallet.webp (목탁 채), bowl.webp (싱잉볼), felt-mallet.webp (싱잉볼 채)
+         (WebP: PNG와 같은 투명 배경이지만 용량이 1/4 정도라 앱이 빨리 열린다)
 
 ■ 진짜 사진으로 바꾸기
   prayer/images/src/ 에 moktak.png / bowl.png (배경이 투명한 PNG)를 넣고 다시 실행하면 그 사진을 쓴다.
@@ -12,7 +13,6 @@
 """
 import glob
 import os
-import shutil
 
 import numpy as np
 from PIL import Image, ImageFilter
@@ -297,16 +297,16 @@ def main():
         ("felt-mallet", felt_mallet_scene, felt_mallet_shade, dict(size=(640, 160), extent=2.6, center=np.array([0.1, 0.0, 0]), pitch_deg=15)),
     ]
     for name, scene, shade, cam in jobs:
-        path = os.path.join(OUT, name + ".png")
+        path = os.path.join(OUT, name + ".webp")
         photos = sorted(glob.glob(os.path.join(SRC, name + ".png")))
         if photos:
-            shutil.copy(photos[0], path)
+            Image.open(photos[0]).convert("RGBA").save(path, "WEBP", quality=85, method=6)
             print(f"  사진 사용: src/{name}.png")
         else:
             img = render(scene, shade, **cam)
             img = crop(img) if "mallet" in name else with_shadow(img)  # 채는 움직이므로 그림자 없이 딱 맞게 자름
-            img.save(path, optimize=True)
-        print(f"{name}.png  {os.path.getsize(path) / 1024:.0f} KB")
+            img.save(path, "WEBP", quality=85, method=6)
+        print(f"{name}.webp  {os.path.getsize(path) / 1024:.0f} KB")
 
 
 if __name__ == "__main__":
