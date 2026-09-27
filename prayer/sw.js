@@ -1,6 +1,6 @@
 // 오프라인에서도 앱이 열리도록 파일을 휴대폰에 저장해 두는 서비스 워커.
 // 앱 파일을 고친 뒤에는 VERSION 숫자를 올려야 사용자 휴대폰에 새 버전이 반영된다.
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CORE = `hapjang-core-${VERSION}`;
 const LONG = `hapjang-long-${VERSION}`; // 타이머용 긴 소리 파일 (처음 쓸 때 저장)
 const FONTS = 'hapjang-fonts';
@@ -19,6 +19,8 @@ const CORE_FILES = [
   'sounds/bowl.mp3',
   'images/bead.png',
   'images/head.png',
+  'images/moktak.png',
+  'images/bowl.png',
 ];
 
 self.addEventListener('install', (e) => {

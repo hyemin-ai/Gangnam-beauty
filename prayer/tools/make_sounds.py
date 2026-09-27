@@ -153,21 +153,31 @@ def bowl():
 
 
 def moktak():
-    """목탁: 속이 빈 나무통의 공명(낮은 '톡')과 나무 몸통의 짧은 떨림, 나무 채가 닿는 순간,
-    치는 순간 음이 살짝 내려가는 나무 특유의 성질, 법당 같은 짧은 울림."""
-    sec = 0.9
+    """목탁: 단단한 나무통을 나무 채로 '똑' 친 맑은 소리.
+    - 속 빈 나무통의 뚜렷한 음(약 800Hz)이 짧게 맑게 울리고
+    - 나무 특유의 비조화 배음(약 2.6배, 4.8배)이 빠르게 사라지며
+    - 단단한 채라서 치는 순간이 또렷하고
+    - 법당처럼 넓은 공간에 은은하게 퍼지는 울림을 더했다."""
+    sec = 1.6
     t = np.arange(int(SR * sec)) / SR
-    glide = 1 + 0.035 * np.exp(-t / 0.012)  # 처음 몇 ms 동안 음이 살짝 높다가 내려옴
-    parts = [(612.0, 1.0, 0.085), (1290.0, 0.45, 0.032), (2170.0, 0.22, 0.016), (3380.0, 0.12, 0.009), (318.0, 0.35, 0.05)]
+    glide = 1 + 0.015 * np.exp(-t / 0.008)  # 치는 순간 음이 아주 살짝 높았다가 자리 잡음
+    parts = [
+        (812.0, 1.0, 0.16),    # 나무통의 주된 울림 (맑은 '똑')
+        (406.0, 0.28, 0.07),   # 통 안 공기의 낮은 울림
+        (2115.0, 0.32, 0.045),
+        (3890.0, 0.14, 0.02),
+        (5620.0, 0.06, 0.009),
+    ]
     x = np.zeros_like(t)
     for f, a, tau in parts:
         phase = 2 * np.pi * np.cumsum(f * glide) / SR
         x += a * np.exp(-t / tau) * np.sin(phase)
-    x = strike(x, 0.9)
+    x = strike(x, 0.5)
     rng = np.random.default_rng(3)
-    knock = rng.standard_normal(int(SR * 0.004)) * np.exp(-np.arange(int(SR * 0.004)) / (SR * 0.0012))
-    x[: len(knock)] += 0.25 * lowpass(knock, 3500)
-    return fade_out(room(x, 0.9, 0.18), 0.25)
+    n = int(SR * 0.002)
+    tick = rng.standard_normal(n) * np.exp(-np.arange(n) / (SR * 0.0005))
+    x[:n] += 0.12 * tick
+    return fade_out(room(x, 1.8, 0.24), 0.3)
 
 
 def click():

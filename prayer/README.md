@@ -39,7 +39,9 @@ prayer/
 
 ## 화면과 배터리
 
-- 항상 **검정 배경에 흰 글씨**입니다. 순수 검정(#000)은 요즘 휴대폰(OLED 화면)에서 거의 전기를 쓰지 않습니다.
+- 항상 **검정 배경에 흰 글씨**, 포인트 색은 따뜻한 금빛입니다. 글꼴은 둥글고 귀여운 **주아(Jua)**, **고운돋움**(무료, OFL).
+- 구슬·목탁·싱잉볼 뒤의 은은한 빛은 움직이지 않는 그림이라 배터리 부담이 없습니다.
+- 순수 검정(#000)은 요즘 휴대폰(OLED 화면)에서 거의 전기를 쓰지 않습니다.
 - 소리가 끝나고 조용해지면 오디오 엔진을 잠재우고, 화면이 꺼져 있을 때는 타이머 숫자 계산도 멈춥니다.
 - 앱 전체 크기는 타이머용 긴 소리를 빼면 약 0.6MB입니다.
 
@@ -60,6 +62,8 @@ prayer/
 | 염주 딸깍 소리 | `prayer/sounds/src/click.mp3` |
 | 구슬 사진 | `prayer/images/src/bead.jpg` |
 | 모주(큰 구슬) 사진 | `prayer/images/src/head.jpg` |
+| 목탁 이미지 | `prayer/images/src/moktak.png` (배경을 지운 PNG) |
+| 싱잉볼 이미지 | `prayer/images/src/bowl.png` (배경을 지운 PNG) |
 
 3. Claude에게 "올린 파일로 소리/사진 바꿔줘"라고 하면 `tools/make_sounds.py`, `tools/make_beads.py`를 다시 실행해 앞뒤 무음 자르기, 음량 맞추기, 동그랗게 자르기까지 해서 적용합니다.
 
@@ -71,6 +75,7 @@ prayer/
 pip install numpy pillow lameenc miniaudio
 python3 prayer/tools/make_sounds.py
 python3 prayer/tools/make_beads.py
+python3 prayer/tools/make_objects.py   # 목탁·싱잉볼 이미지 (3D 계산)
 ```
 
 ### 싱잉볼 타이머가 화면이 꺼져도 울리는 원리
