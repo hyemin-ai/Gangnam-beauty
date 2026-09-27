@@ -15,7 +15,9 @@
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap">
+  <!-- 글꼴은 화면을 먼저 그린 뒤 받아서 바꿔 끼운다 (글꼴을 기다리느라 첫 화면이 늦게 뜨지 않도록) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap"></noscript>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -56,7 +58,7 @@
     <!-- 2. 목탁 -->
     <section class="view" id="view-moktak" data-title="목탁" hidden>
       <div class="tap-area center" id="moktak-tap" role="button" aria-label="목탁 치기">
-        <div class="stage"><img class="art" id="moktak-art" src="images/moktak.png" alt="" draggable="false"><img class="mallet" id="moktak-mallet" src="images/mallet.png" alt="" draggable="false"></div>
+        <div class="stage"><img class="art" id="moktak-art" src="images/moktak.webp" width="720" height="560" loading="lazy" decoding="async" alt="" draggable="false"><img class="mallet" id="moktak-mallet" src="images/mallet.webp" loading="lazy" decoding="async" alt="" draggable="false"></div>
         <p class="hint">목탁을 톡 쳐 보세요</p>
       </div>
     </section>
@@ -64,7 +66,7 @@
     <!-- 3. 싱잉볼 -->
     <section class="view" id="view-bowl" data-title="싱잉볼" hidden>
       <div class="tap-area center small" id="bowl-tap" role="button" aria-label="싱잉볼 치기">
-        <div class="stage"><img class="art" id="bowl-art" src="images/bowl.png" alt="" draggable="false"><img class="mallet" id="bowl-mallet" src="images/felt-mallet.png" alt="" draggable="false"></div>
+        <div class="stage"><img class="art" id="bowl-art" src="images/bowl.webp" width="720" height="500" loading="lazy" decoding="async" alt="" draggable="false"><img class="mallet" id="bowl-mallet" src="images/felt-mallet.webp" loading="lazy" decoding="async" alt="" draggable="false"></div>
         <p class="hint">싱잉볼을 살며시 눌러 보세요</p>
       </div>
 

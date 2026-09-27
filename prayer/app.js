@@ -51,9 +51,15 @@ function loadSound(name) {
     .then((buf) => { buffers[name] = buf; })
     .catch(() => { /* 실패하면 아래 Audio 대체 재생 사용 */ });
 }
+// 짧은 소리만 바로 준비하고, 긴 싱잉볼 소리는 처음 필요할 때 받는다 (첫 화면을 빨리 띄우기 위해)
 loadSound('click');
 loadSound('moktak');
-loadSound('bowl');
+let bowlRequested = false;
+function needBowl() {
+  if (bowlRequested) return;
+  bowlRequested = true;
+  loadSound('bowl');
+}
 
 // 배터리 절약: 소리가 끝나고 한동안 조용하면 오디오 엔진을 잠재운다
 let idleTimer = null;
@@ -69,6 +75,7 @@ function unlockAudio() {
 
 function play(name, volume = 1) {
   if (!S.settings.sound) return;
+  if (name === 'bowl') needBowl();
   unlockAudio();
   const buf = buffers[name];
   if (ctx && buf) {
@@ -131,6 +138,7 @@ function showTab(name) {
   $('#title').textContent = views[name].dataset.title;
   S.tab = name;
   save();
+  if (name === 'bowl') needBowl();
 }
 document.querySelectorAll('#tabs button').forEach((b) => b.addEventListener('click', () => showTab(b.dataset.view)));
 
@@ -167,8 +175,8 @@ function buildMala() {
     ring.appendChild(img);
   };
   // 구슬 i는 모주에서 시계 방향으로 i칸. 링을 돌려 지금 구슬을 맨 위 표시(▼) 아래로 가져온다
-  for (let i = 1; i <= n; i++) place('images/bead.png', i, r);
-  place('images/head.png', 0, n === 21 ? 16 : 7);
+  for (let i = 1; i <= n; i++) place('images/bead.webp', i, r);
+  place('images/head.webp', 0, n === 21 ? 16 : 7);
   spinOffset = 0;
   renderBeads(false);
 }
@@ -571,5 +579,8 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
     reloaded = true;
     location.reload();
   });
-  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(() => {});
+  // 오프라인 저장은 첫 화면이 다 뜬 뒤에 시작 (처음 열 때 다운로드가 겹치지 않도록)
+  const registerSW = () => navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(() => {});
+  if (document.readyState === 'complete') setTimeout(registerSW, 1500);
+  else window.addEventListener('load', () => setTimeout(registerSW, 1500));
 }
