@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>합장</title>
+  <meta name="description" content="휴대폰 하나로 하는 염주·목탁·싱잉볼 기도">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="합장">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Song+Myung&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1 id="title">염주</h1>
+    <button class="icon-btn" id="open-settings" aria-label="설정">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <!-- 1. 염주 -->
+    <section class="view" id="view-beads" data-title="염주">
+      <div class="segmented" id="bead-mode" role="radiogroup" aria-label="구슬 수">
+        <button data-n="21" role="radio">21</button>
+        <button data-n="108" role="radio">108</button>
+      </div>
+      <div class="tap-area" id="bead-tap" aria-label="눌러서 한 알 넘기기" role="button">
+        <div class="mala-wrap">
+          <svg class="mala" id="mala" viewBox="-160 -160 320 320" aria-hidden="true">
+            <g id="mala-ring"></g>
+            <path class="marker" d="M0 -154 l-6 -9 h12 z"/>
+          </svg>
+          <div class="count-box">
+            <div class="count" id="bead-count">0</div>
+            <div class="sub" id="bead-sub">108 중</div>
+          </div>
+        </div>
+        <p class="stats" id="bead-stats"></p>
+        <p class="hint">화면 어디든 누르면 한 알씩 넘어갑니다</p>
+      </div>
+      <button class="hold-btn" id="bead-reset"><span class="fill"></span><span class="label">길게 눌러 이번 바퀴 초기화</span></button>
+    </section>
+
+    <!-- 2. 목탁 -->
+    <section class="view" id="view-moktak" data-title="목탁" hidden>
+      <div class="tap-area center" id="moktak-tap" role="button" aria-label="목탁 치기">
+        <svg class="art" id="moktak-art" viewBox="0 0 240 200" aria-hidden="true">
+          <path d="M30 124c0-50 40-86 92-86s92 36 92 86c0 36-40 58-92 58s-92-22-92-58z"/>
+          <path d="M62 132c16 7 104 7 120 0c4-2 6 3 2 5c-24 12-100 12-124 0c-4-2-2-7 2-5z"/>
+          <path d="M98 42c-2-20 10-30 24-30s26 10 24 30"/>
+          <path d="M236 6 194 52" class="stick"/>
+          <ellipse cx="189" cy="58" rx="9" ry="6" class="stick" transform="rotate(-48 189 58)"/>
+        </svg>
+        <p class="hint">목탁을 누르세요</p>
+      </div>
+    </section>
+
+    <!-- 3. 싱잉볼 -->
+    <section class="view" id="view-bowl" data-title="싱잉볼" hidden>
+      <div class="tap-area center small" id="bowl-tap" role="button" aria-label="싱잉볼 치기">
+        <svg class="art" id="bowl-art" viewBox="0 0 240 170" aria-hidden="true">
+          <ellipse cx="120" cy="52" rx="86" ry="14"/>
+          <path d="M34 52c4 50 38 82 86 82s82-32 86-82"/>
+          <path d="M58 140c20 14 104 14 124 0 8 10-8 20-62 20s-70-10-62-20z"/>
+          <path d="M20 20 70 44" class="stick"/>
+        </svg>
+        <p class="hint">싱잉볼을 누르세요</p>
+      </div>
+
+      <div class="timer">
+        <p class="label">간격마다 자동으로 울림</p>
+        <div class="segmented" id="bowl-interval" role="radiogroup" aria-label="간격">
+          <button data-m="5" role="radio">5분</button>
+          <button data-m="15" role="radio">15분</button>
+          <button data-m="30" role="radio">30분</button>
+        </div>
+        <p class="countdown" id="bowl-countdown">&nbsp;</p>
+        <button class="primary" id="bowl-start">시작</button>
+        <label class="check"><input type="checkbox" id="bowl-wake"> 화면 켜둔 채로 명상</label>
+        <p class="note">화면이 꺼져도 울리지만, 다른 앱에서 음악을 틀면 멈출 수 있습니다.</p>
+      </div>
+    </section>
+
+    <!-- 4. 사찰 -->
+    <section class="view scroll" id="view-temple" data-title="사찰" hidden>
+      <form class="search" id="temple-search">
+        <input type="search" id="temple-q" placeholder="절 이름 (예: 조계사)" enterkeyhint="search" autocomplete="off">
+        <button type="submit">카카오맵</button>
+      </form>
+
+      <h2>자주 가는 절</h2>
+      <ol class="favs" id="favs"></ol>
+
+      <div class="row-head">
+        <h2>방문 기록</h2>
+        <button class="text-btn" id="visit-add">+ 기록 쓰기</button>
+      </div>
+      <ul class="visits" id="visits"></ul>
+    </section>
+  </main>
+
+  <nav class="tabs" id="tabs">
+    <button data-view="beads">염주</button>
+    <button data-view="moktak">목탁</button>
+    <button data-view="bowl">싱잉볼</button>
+    <button data-view="temple">사찰</button>
+  </nav>
+
+  <!-- 방문 기록 작성 -->
+  <dialog id="visit-dialog">
+    <form method="dialog" id="visit-form">
+      <h2 id="visit-dialog-title">방문 기록</h2>
+      <label>절 이름<input name="name" required maxlength="40"></label>
+      <label>방문 날짜<input name="date" type="date" required></label>
+      <label>빌었던 소원<textarea name="wish" rows="4" maxlength="500"></textarea></label>
+      <div class="actions">
+        <button type="button" class="text-btn danger" id="visit-delete">삭제</button>
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate class="text-btn">취소</button>
+        <button value="save" class="primary">저장</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 자주 가는 절 지정 -->
+  <dialog id="fav-dialog">
+    <form method="dialog" id="fav-form">
+      <h2 id="fav-dialog-title">자주 가는 절</h2>
+      <label>절 이름<input name="name" required maxlength="40"></label>
+      <div class="actions">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate class="text-btn">취소</button>
+        <button value="save" class="primary">저장</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 설정 -->
+  <dialog id="settings-dialog">
+    <form method="dialog">
+      <h2>설정</h2>
+      <label class="check"><input type="checkbox" id="set-sound"> 소리</label>
+      <label class="check"><input type="checkbox" id="set-haptic"> 진동</label>
+      <h3>기록 백업</h3>
+      <p class="note">모든 기록은 이 휴대폰에만 저장됩니다. 휴대폰을 바꾸기 전에 백업하세요.</p>
+      <div class="actions left">
+        <button type="button" class="text-btn" id="backup-export">백업 파일 저장</button>
+        <button type="button" class="text-btn" id="backup-import">백업 불러오기</button>
+        <input type="file" id="backup-file" accept="application/json,.json" hidden>
+      </div>
+      <h3>홈 화면에 설치</h3>
+      <p class="note">아이폰: Safari 공유 버튼 → ‘홈 화면에 추가’<br>안드로이드: Chrome 메뉴(⋮) → ‘홈 화면에 추가’ 또는 ‘앱 설치’</p>
+      <h3>정보</h3>
+      <p class="note">목탁·싱잉볼 소리는 이 앱에서 직접 합성했습니다. 글꼴: 고운바탕, 송명 (SIL Open Font License).</p>
+      <div class="actions">
+        <span class="spacer"></span>
+        <button value="close" class="primary">닫기</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 아이폰 햅틱용 숨은 스위치 (iOS 18 이상 Safari에서만 동작) -->
+  <label class="ios-haptic" aria-hidden="true"><input type="checkbox" switch tabindex="-1"></label>
+
+  <script src="app.js"></script>
+</body>
+</html>
