@@ -560,5 +560,13 @@ renderAll();
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') renderBeads(false); });
 
 if ('serviceWorker' in navigator && location.protocol !== 'file:') {
-  navigator.serviceWorker.register('sw.js').catch(() => {});
+  // 새 버전이 설치되면 한 번 새로고침해서 바로 보여준다 (싱잉볼 타이머가 도는 중이면 방해하지 않음)
+  const hadController = !!navigator.serviceWorker.controller;
+  let reloaded = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadController || reloaded || running) return;
+    reloaded = true;
+    location.reload();
+  });
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(() => {});
 }
