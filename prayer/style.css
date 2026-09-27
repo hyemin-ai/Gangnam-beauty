@@ -1,23 +1,14 @@
 :root {
-  --bg: #ffffff;
-  --fg: #111111;
+  /* 항상 검정 배경 + 흰 글씨. 순수 검정(#000)은 OLED 화면에서 전기를 거의 쓰지 않는다 */
+  --bg: #000000;
+  --fg: #f2f2f2;
   --muted: #8a8a8a;
-  --line: #e4e4e4;
-  --soft: #f4f4f4;
-  --danger: #111111;
+  --line: #222222;
+  --soft: #151515;
   --serif: "Gowun Batang", "Nanum Myeongjo", "AppleMyungjo", "Noto Serif KR", serif;
   --brush: "Song Myung", var(--serif);
   --tab-h: 58px;
-  color-scheme: light dark;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0b0b0b;
-    --fg: #ededed;
-    --muted: #7c7c7c;
-    --line: #262626;
-    --soft: #161616;
-  }
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -90,15 +81,36 @@ main { flex: 1; min-height: 0; position: relative; }
 }
 .segmented button { padding: 6px 18px; font-size: 14px; min-width: 64px; }
 .segmented button[aria-checked="true"] { background: var(--fg); color: var(--bg); }
+#bead-mode { flex-shrink: 0; margin-bottom: 14px; }
+
+/* 소원 (염주 화면 위에 항상 고정) */
+.wish {
+  width: 100%;
+  max-width: 420px;
+  min-height: 44px;
+  margin: 0 0 14px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-family: var(--brush);
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: keep-all;
+}
+.wish.empty { color: var(--muted); font-family: var(--serif); font-size: 14px; border-style: dashed; }
 
 /* 염주 */
 .mala-wrap { position: relative; width: min(82vw, 52vh, 360px); aspect-ratio: 1; }
 .mala { width: 100%; height: 100%; overflow: visible; }
 #mala-ring { transition: transform 0.28s ease-out; }
 #mala-ring.no-anim { transition: none; }
-.mala circle { fill: var(--bg); stroke: var(--fg); stroke-width: 1.4; }
-.mala circle.head { fill: var(--fg); }
-.mala circle.cur { fill: var(--fg); }
+.mala .cord { fill: none; stroke: #5a3a26; }
 .mala .marker { fill: var(--muted); }
 .count-box { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
 .count { font-size: clamp(56px, 18vw, 84px); line-height: 1; font-variant-numeric: tabular-nums; }
@@ -194,7 +206,7 @@ dialog {
   color: var(--fg);
   padding: 22px 20px;
 }
-dialog::backdrop { background: rgba(0, 0, 0, 0.35); }
+dialog::backdrop { background: rgba(0, 0, 0, 0.75); }
 dialog h2 { margin-top: 0; }
 dialog label:not(.check) { display: block; font-size: 13px; color: var(--muted); margin: 14px 0 0; }
 dialog label:not(.check) input, dialog textarea {
