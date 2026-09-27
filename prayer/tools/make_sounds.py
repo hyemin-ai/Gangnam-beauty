@@ -10,6 +10,7 @@
   prayer/sounds/src/ 폴더에 bowl / moktak / click 이름으로 녹음 파일(.mp3 .wav .flac .ogg)을 넣고
   이 스크립트를 다시 실행하면, 합성 소리 대신 그 녹음을 다듬어(앞 무음 자르기·음량 맞추기) 사용한다.
   예) prayer/sounds/src/bowl.mp3  →  bowl.mp3와 타이머 파일 3개가 모두 이 녹음으로 바뀐다.
+  목탁·딸깍은 여러 번 친 녹음이어도 괜찮다. 가장 또렷한 '한 번 친 소리'만 자동으로 잘라 쓴다.
   녹음 파일은 반드시 CC0 등 자유 이용이 가능한 것만 쓸 것 (Pixabay, Freesound의 CC0 등).
 
 ■ 녹음이 없으면: 실제 악기의 떨림 방식(배음 비율, 맥놀이, 채가 닿는 순간, 공간 울림)을
@@ -93,14 +94,41 @@ def fade_out(x, seconds, sr=SR):
     return x * (env[:, None] if x.ndim == 2 else env)
 
 
-def load_recording(name):
-    """src 폴더의 녹음 파일을 읽어 (길이, 2) 배열로. 없으면 None."""
+def first_clean_hit(x, max_seconds):
+    """여러 번 친 녹음에서 '한 번 친 소리'만 잘라낸다.
+    소리 크기가 갑자기 커지는 순간(타격)들을 찾고, 가장 또렷한 타격 하나를
+    다음 타격 직전까지(최대 max_seconds) 잘라 끝을 부드럽게 줄인다."""
+    mono = np.abs(x).max(axis=1)
+    hop = int(SR * 0.005)
+    env = np.array([mono[i:i + hop].max() for i in range(0, len(mono) - hop, hop)])
+    peak = env.max()
+    onsets = []
+    for i in range(2, len(env)):
+        if env[i] > peak * 0.3 and env[i] > env[i - 2] * 3 and (not onsets or i - onsets[-1] > 20):
+            onsets.append(i)
+    if len(onsets) <= 1:
+        return x
+    # 가장 센 타격 3개 중, 다음 타격까지 간격이 가장 긴 것 (여운이 잘 남아 있는 것)
+    strong = sorted(onsets, key=lambda i: -env[i:i + 4].max())[:3]
+    gaps = {i: (onsets[onsets.index(i) + 1] - i if onsets.index(i) + 1 < len(onsets) else len(env) - i) for i in strong}
+    pick = max(strong, key=lambda i: gaps[i])
+    start = max(0, pick * hop - int(SR * 0.01))
+    end = min(len(x), start + int(SR * max_seconds), start + gaps[pick] * hop - int(SR * 0.02))
+    print(f"  타격 {len(onsets)}번 중 {onsets.index(pick) + 1}번째를 사용 ({(end - start) / SR:.2f}초)")
+    return x[start:end]
+
+
+def load_recording(name, single_hit=False, max_seconds=1.5):
+    """src 폴더의 녹음 파일을 읽어 (길이, 2) 배열로. 없으면 None.
+    single_hit=True면 여러 번 친 녹음에서 한 번 친 소리만 골라낸다."""
     files = sorted(glob.glob(os.path.join(SRC, name + ".*")))
     if not files:
         return None
     import miniaudio
     d = miniaudio.decode_file(files[0], output_format=miniaudio.SampleFormat.FLOAT32, nchannels=2, sample_rate=SR)
     x = np.frombuffer(d.samples, dtype=np.float32).reshape(-1, 2).astype(np.float64)
+    if single_hit:
+        x = first_clean_hit(x, max_seconds)
     level = np.abs(x).max(axis=1)
     loud = np.nonzero(level > level.max() * 0.03)[0]  # 앞뒤 무음 자르기 (약 -30dB)
     start = max(0, loud[0] - int(SR * 0.005))
@@ -189,9 +217,9 @@ def click():
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    rec_click = load_recording("click")
+    rec_click = load_recording("click", single_hit=True, max_seconds=0.15)
     encode(rec_click if rec_click is not None else click(), os.path.join(OUT, "click.mp3"), 96)
-    rec_moktak = load_recording("moktak")
+    rec_moktak = load_recording("moktak", single_hit=True, max_seconds=1.5)
     encode(rec_moktak if rec_moktak is not None else moktak(), os.path.join(OUT, "moktak.mp3"), 128)
     rec_bowl = load_recording("bowl")
     ring = rec_bowl if rec_bowl is not None else bowl()

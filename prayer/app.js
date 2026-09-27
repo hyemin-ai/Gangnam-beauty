@@ -267,6 +267,7 @@ wishDialog.addEventListener('close', () => {
 onTap($('#moktak-tap'), () => {
   play('moktak');
   haptic(12);
+  flash($('#moktak-mallet'), 'strike', 70);
   flash($('#moktak-art'), 'hit', 110);
 });
 
@@ -274,6 +275,7 @@ onTap($('#moktak-tap'), () => {
 onTap($('#bowl-tap'), () => {
   play('bowl');
   haptic(20);
+  flash($('#bowl-mallet'), 'strike', 70);
   flash($('#bowl-art'), 'hit', 160);
 });
 

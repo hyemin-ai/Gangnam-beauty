@@ -1,7 +1,7 @@
 """목탁·싱잉볼 이미지(PNG, 투명 배경)를 3D로 계산해 그린다.
 
 사용법:  pip install numpy pillow  →  python3 prayer/tools/make_objects.py
-결과물:  prayer/images/moktak.png, prayer/images/bowl.png
+결과물:  prayer/images/moktak.png (목탁), mallet.png (목탁 채), bowl.png (싱잉볼), felt-mallet.png (싱잉볼 채)
 
 ■ 진짜 사진으로 바꾸기
   prayer/images/src/ 에 moktak.png / bowl.png (배경이 투명한 PNG)를 넣고 다시 실행하면 그 사진을 쓴다.
@@ -158,87 +158,143 @@ def with_shadow(img, squash=0.22, strength=0.55, drop=0.0):
 
 
 # ───────── 목탁 ─────────
+# 스님들이 손에 들고 치는 목탁 모양: 달걀처럼 둥근 몸통이 뒤로 갈수록 가늘어져 납작한 고리 손잡이가 되고,
+# 앞쪽 옆면에 길게 갈라진 틈과 그 끝의 둥근 구멍이 있다. 채는 따로 그려서 칠 때마다 움직인다.
+def rot(yaw, pitch, roll=0.0):
+    y, x, z = np.radians([yaw, pitch, roll])
+    Ry = np.array([[np.cos(y), 0, np.sin(y)], [0, 1, 0], [-np.sin(y), 0, np.cos(y)]])
+    Rx = np.array([[1, 0, 0], [0, np.cos(x), -np.sin(x)], [0, np.sin(x), np.cos(x)]])
+    Rz = np.array([[np.cos(z), -np.sin(z), 0], [np.sin(z), np.cos(z), 0], [0, 0, 1]])
+    return Ry @ Rx @ Rz
+
+
+MOKTAK_R = rot(28, 0, -12)  # 비스듬히 놓인 모습
+
+
+def moktak_cut(q):
+    """앞쪽 옆면의 긴 틈 + 끝의 둥근 구멍."""
+    slit = sd_box(q, np.array([-0.95, 0.02, 0.75]), np.array([0.5, 0.035, 0.5]))
+    hole = np.sqrt((q[:, 0] + 0.5) ** 2 + (q[:, 1] - 0.02) ** 2) - 0.2
+    hole = np.maximum(hole, 0.25 - q[:, 2])
+    return np.minimum(slit, hole)
+
+
 def moktak_scene(p):
-    body = sd_ellipsoid(p, np.array([0, 0, 0.0]), np.array([1.0, 0.86, 0.92]))
-    handle = sd_torus_z(p, np.array([0, 0.74, -0.18]), 0.36, 0.085)
-    body = smin(body, handle, 0.12)
-    slit = sd_box(p, np.array([0, -0.12, 0.85]), np.array([0.74, 0.06, 0.4]))
-    slit = smin(slit, sd_ellipsoid(p, np.array([0, -0.12, 0.55]), np.array([0.78, 0.07, 0.5])), 0.05)
-    body = np.maximum(body, -slit)
-    stick = sd_capsule(p, np.array([1.05, -0.62, 0.62]), np.array([1.95, 0.25, 0.25]), 0.05)
-    head = sd_ellipsoid(p, np.array([1.02, -0.66, 0.64]), np.array([0.15, 0.13, 0.13]))
-    mallet = smin(stick, head, 0.04)
-    d = np.minimum(body, mallet)
-    mat = np.where(mallet < body, 1, 0)
-    # 입 안쪽(어두운 공간)은 따로 표시
-    inside = (np.abs(p[:, 1] + 0.12) < 0.1) & (p[:, 2] > 0.3) & (np.abs(p[:, 0]) < 0.74) & (mat == 0)
-    mat = np.where(inside, 2, mat)
+    q = p @ MOKTAK_R
+    head = sd_ellipsoid(q, np.array([-0.45, 0, 0.0]), np.array([0.95, 0.78, 0.8]))
+    neck = sd_ellipsoid(q, np.array([0.45, -0.02, 0.0]), np.array([0.62, 0.42, 0.44]))
+    body = smin(head, neck, 0.35)
+    # 납작한 고리 손잡이 (수평으로 누운 도넛을 위아래로 눌러 놓은 모양)
+    hq = q - np.array([1.25, -0.06, 0.0])
+    ring = np.sqrt((np.sqrt(hq[:, 0] ** 2 + hq[:, 2] ** 2) - 0.36) ** 2 + (hq[:, 1] / 0.75) ** 2) - 0.12
+    body = smin(body, ring * 0.8, 0.12)
+    cut = moktak_cut(q)
+    d = np.maximum(body, -cut)
+    mat = np.where(cut < 0.02, 2, 0)
     return d, mat
 
 
 def moktak_shade(pos, n, view, mat):
-    g = noise3(pos * np.array([1, 3.5, 1]), 3.0, 5)
-    grain = 0.5 + 0.5 * np.sin(pos[:, 1] * 22 + g * 3.2)
-    lacquer = np.array([0.42, 0.13, 0.06]) * (1 - grain[:, None] * 0.35) + np.array([0.12, 0.03, 0.01]) * grain[:, None] * 0.3
-    light_wood = np.array([0.78, 0.58, 0.36]) * (0.85 + 0.15 * grain[:, None])
-    base = np.where((mat == 1)[:, None], light_wood, lacquer)
-    base = np.where((mat == 2)[:, None], np.array([0.05, 0.015, 0.01]), base)
-    gloss = np.where(mat == 1, 0.15, np.where(mat == 2, 0.0, 0.55))
-    return lighting(n, view, base, gloss, 55)
+    q = pos @ MOKTAK_R
+    g = noise3(q * np.array([0.6, 2.5, 2.5]), 2.2, 5)
+    grain = 0.5 + 0.5 * np.sin((q[:, 1] + 0.35 * q[:, 2]) * 38 + g * 4.5)
+    grain = grain ** 4
+    wood = np.array([0.78, 0.36, 0.15]) * (1 - 0.45 * grain[:, None]) + np.array([0.08, 0.02, 0.0]) * grain[:, None]
+    wood = wood * (0.92 + 0.12 * noise3(q, 9.0, 11)[:, None])
+    base = np.where((mat == 2)[:, None], np.array([0.06, 0.02, 0.01]), wood)
+    gloss = np.where(mat == 2, 0.0, 0.45)
+    return lighting(n, view, base, gloss, 45)
+
+
+def mallet_scene(p):
+    """목탁 채: 한쪽 끝의 동그란 머리(치는 부분) + 가는 목 + 손잡이 쪽으로 굵어지는 막대."""
+    x = p[:, 0]
+    h = np.clip((x + 0.8) / 1.95, 0, 1)
+    r = 0.045 + 0.04 * h
+    xc = np.clip(x, -0.8, 1.15)
+    stick = np.sqrt((x - xc) ** 2 + p[:, 1] ** 2 + p[:, 2] ** 2) - r
+    knob = sd_ellipsoid(p, np.array([-0.98, 0, 0]), np.array([0.15, 0.13, 0.13]))
+    d = smin(stick, knob, 0.06) * 0.7
+    return d, np.zeros(len(p), int)
+
+
+def mallet_shade(pos, n, view, mat):
+    g = noise3(pos * np.array([0.3, 4, 4]), 3.0, 21)
+    grain = 0.5 + 0.5 * np.sin(pos[:, 1] * 40 + g * 3)
+    base = np.array([0.93, 0.8, 0.6]) * (0.93 + 0.07 * grain[:, None])
+    return lighting(n, view, base, 0.12, 20)
+
+
+def crop(img, pad=4):
+    box = img.getbbox()
+    return img.crop((max(0, box[0] - pad), max(0, box[1] - pad), min(img.width, box[2] + pad), min(img.height, box[3] + pad)))
 
 
 # ───────── 싱잉볼 ─────────
-BOWL_C = np.array([0, 0.55, 0.0])
+# 망치로 두드려 만든 광택 나는 황동 볼을 옆에서 본 모습. 깊고 둥근 몸통, 살짝 안으로 말린 입구,
+# 두드린 자국과 군데군데 어두운 얼룩. 펠트 머리 채는 따로 그려서 칠 때마다 움직인다.
+BOWL_C = np.array([0, 0.3, 0.0])
 
 
 def bowl_scene(p):
-    outer = sd_sphere(p, BOWL_C, 1.0)
-    inner = sd_sphere(p, BOWL_C, 0.93)
+    outer = sd_ellipsoid(p, BOWL_C, np.array([1.1, 0.95, 1.1]))
+    inner = sd_ellipsoid(p, BOWL_C, np.array([1.03, 0.89, 1.03]))
     shell = np.maximum(outer, -inner)
-    shell = np.maximum(shell, p[:, 1] - 0.42)          # 위쪽 테두리
-    shell = np.maximum(shell, -(p[:, 1] + 0.33))       # 평평한 바닥
-    cushion = sd_ellipsoid(p, np.array([0, -0.5, 0.0]), np.array([1.2, 0.24, 1.2]))
-    stick = sd_capsule(p, np.array([-1.1, -0.36, 0.95]), np.array([0.35, -0.3, 1.18]), 0.065)
-    d = np.minimum(np.minimum(shell, cushion), stick)
-    mat = np.where(d == shell, 0, np.where(d == cushion, 1, 2))
-    inner_side = (length(p - BOWL_C) < 0.965) & (mat == 0)
-    mat = np.where(inner_side, 3, mat)
+    shell = np.maximum(shell, p[:, 1] - 0.27)          # 입구
+    shell = np.maximum(shell, -(p[:, 1] + 0.6))       # 평평한 바닥
+    lip = sd_torus_z(p[:, [0, 2, 1]], np.array([0, 0, 0.27]), 1.05, 0.03)  # 입구 테두리
+    d = smin(shell, lip, 0.02)
+    inside = sd_ellipsoid(p, BOWL_C, np.array([1.065, 0.92, 1.065])) < 0
+    mat = np.where(inside, 3, 0)
     return d, mat
 
 
 def bowl_shade(pos, n, view, mat):
-    # 두드려 만든 금속 표면의 작은 울퉁불퉁함
-    bump = noise3(pos, 18.0, 9)[:, None] * 0.06
+    # 망치로 두드린 자국: 여러 겹 잡음으로 표면을 살짝 울퉁불퉁하게
+    bump = np.stack([noise3(pos, 11.0, 9 + i) for i in range(3)], axis=1) * 0.06
     nb = n + bump
     nb /= np.linalg.norm(nb, axis=-1, keepdims=True)
     refl = 2 * np.sum(nb * view, axis=-1, keepdims=True) * nb - view
-    env = np.clip(0.5 + 0.5 * refl[:, 1], 0, 1)[:, None]   # 위는 밝고 아래는 어두운 주변 반사
-    bronze = np.array([0.95, 0.66, 0.3])
-    metal = bronze * (0.25 + 0.9 * env) + np.array([0.9, 0.75, 0.5]) * env ** 6 * 0.5
-    band = (np.abs(pos[:, 1] - 0.3) < 0.035) | (np.abs(pos[:, 1] - 0.22) < 0.012)  # 테두리 아래 장식 줄
-    metal = np.where(band[:, None], metal * 0.6, metal)
-    inner_metal = bronze * (0.2 + 0.5 * env) * 0.8
-    # 방석: 짙은 빨강 천 + 금색 테두리 줄
-    ring = np.abs(np.sqrt(pos[:, 0] ** 2 + pos[:, 2] ** 2) - 0.95) < 0.05
-    cloth = np.where(ring[:, None], np.array([0.85, 0.62, 0.25]), np.array([0.55, 0.08, 0.1]))
-    cloth = cloth * (0.9 + 0.1 * noise3(pos, 40, 3)[:, None])
-    wood = np.array([0.6, 0.4, 0.22])
-    base = np.select([(mat == 0)[:, None], (mat == 3)[:, None], (mat == 1)[:, None]], [metal, inner_metal, cloth], wood)
-    gloss = np.select([mat == 0, mat == 3, mat == 1], [0.9, 0.4, 0.05], 0.2)
-    shin = np.where((mat == 0) | (mat == 3), 80, 12)
-    col = np.zeros_like(base)
-    for s in np.unique(shin):
-        m = shin == s
-        col[m] = lighting(nb[m], view[m] if view.ndim > 1 else view, base[m], gloss[m], s, (1.0, 0.9, 0.7))
-    metal_mask = ((mat == 0) | (mat == 3))[:, None]
-    return np.where(metal_mask, base * 0.7 + col * 0.45, col)
+    ry = refl[:, 1:2]
+    # 주변 반사: 위쪽 밝은 빛, 수평선 근처 따뜻한 띠, 아래는 어두움 → 광택 금속 느낌
+    env = 0.55 + 0.35 * np.clip(ry, -1, 1) + np.exp(-((ry - 0.1) / 0.18) ** 2) * 0.35 + 0.15 * noise3(refl, 3.0, 50)[:, None]
+    brass = np.array([1.0, 0.72, 0.3])
+    metal = brass * (0.18 + 0.95 * env) + np.array([1.0, 0.93, 0.78]) * np.clip(ry - 0.55, 0, 1) * 1.4
+    # 군데군데 어두운 얼룩 (바닥 쪽에 더 많이)
+    spots = noise3(pos, 6.0, 31) + noise3(pos, 14.0, 32) * 0.3 - 0.25 * pos[:, 1]
+    stain = np.clip((spots - 0.6) * 3, 0, 1)[:, None]
+    metal = metal * (1 - 0.4 * stain)
+    inner = brass * (0.15 + 0.6 * env) * 0.85
+    base = np.where((mat == 3)[:, None], inner, metal)
+    col = lighting(nb, view, base * 0.35, np.where(mat == 3, 0.4, 1.0), 90, (1.0, 0.92, 0.75))
+    return (base * 0.8 + col * 0.6) * np.array([1.08, 1.0, 0.9])
+
+
+def felt_mallet_scene(p):
+    """싱잉볼 채: 매끈한 나무 막대 + 동그란 펠트 머리."""
+    x = p[:, 0]
+    xc = np.clip(x, -0.75, 1.2)
+    stick = np.sqrt((x - xc) ** 2 + p[:, 1] ** 2 + p[:, 2] ** 2) - 0.055
+    head = sd_sphere(p, np.array([-0.95, 0, 0]), 0.2)
+    d = np.minimum(stick, head)
+    return d, np.where(head < stick, 1, 0)
+
+
+def felt_mallet_shade(pos, n, view, mat):
+    fuzz = noise3(pos, 60.0, 41)[:, None]
+    felt = np.array([0.62, 0.6, 0.56]) * (0.85 + 0.2 * fuzz)
+    wood = np.array([0.9, 0.74, 0.52]) * (0.95 + 0.05 * noise3(pos * np.array([0.3, 5, 5]), 3, 42)[:, None])
+    base = np.where((mat == 1)[:, None], felt, wood)
+    return lighting(n, view, base, np.where(mat == 1, 0.0, 0.18), 25)
 
 
 def main():
     os.makedirs(OUT, exist_ok=True)
     jobs = [
-        ("moktak", moktak_scene, moktak_shade, dict(size=(720, 600), extent=4.6, center=np.array([0.35, -0.05, 0]), pitch_deg=18)),
-        ("bowl", bowl_scene, bowl_shade, dict(size=(720, 560), extent=3.4, center=np.array([-0.1, -0.1, 0]), pitch_deg=28)),
+        ("moktak", moktak_scene, moktak_shade, dict(size=(720, 560), extent=3.9, center=np.array([0.15, 0.0, 0]), pitch_deg=22)),
+        ("mallet", mallet_scene, mallet_shade, dict(size=(640, 140), extent=2.5, center=np.array([0.08, 0.0, 0]), pitch_deg=15)),
+        ("bowl", bowl_scene, bowl_shade, dict(size=(720, 500), extent=2.8, center=np.array([0, -0.1, 0]), pitch_deg=14)),
+        ("felt-mallet", felt_mallet_scene, felt_mallet_shade, dict(size=(640, 160), extent=2.6, center=np.array([0.1, 0.0, 0]), pitch_deg=15)),
     ]
     for name, scene, shade, cam in jobs:
         path = os.path.join(OUT, name + ".png")
@@ -248,7 +304,8 @@ def main():
             print(f"  사진 사용: src/{name}.png")
         else:
             img = render(scene, shade, **cam)
-            with_shadow(img).save(path, optimize=True)
+            img = crop(img) if "mallet" in name else with_shadow(img)  # 채는 움직이므로 그림자 없이 딱 맞게 자름
+            img.save(path, optimize=True)
         print(f"{name}.png  {os.path.getsize(path) / 1024:.0f} KB")
 
 

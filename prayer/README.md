@@ -65,6 +65,7 @@ prayer/
 | 목탁 이미지 | `prayer/images/src/moktak.png` (배경을 지운 PNG) |
 | 싱잉볼 이미지 | `prayer/images/src/bowl.png` (배경을 지운 PNG) |
 
+   - 목탁·딸깍은 **여러 번 친 녹음이어도 괜찮습니다.** 가장 또렷한 한 번만 자동으로 잘라 씁니다.
 3. Claude에게 "올린 파일로 소리/사진 바꿔줘"라고 하면 `tools/make_sounds.py`, `tools/make_beads.py`를 다시 실행해 앞뒤 무음 자르기, 음량 맞추기, 동그랗게 자르기까지 해서 적용합니다.
 
 ## 소리는 어떻게 만들었나
