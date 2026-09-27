@@ -1,8 +1,8 @@
 // 오프라인에서도 앱이 열리도록 파일을 휴대폰에 저장해 두는 서비스 워커.
 // 앱 파일을 고친 뒤에는 VERSION 숫자를 올려야 사용자 휴대폰에 새 버전이 반영된다.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CORE = `hapjang-core-${VERSION}`;
-const LONG = 'hapjang-long-audio'; // 타이머용 긴 소리 파일 (처음 쓸 때 저장)
+const LONG = `hapjang-long-${VERSION}`; // 타이머용 긴 소리 파일 (처음 쓸 때 저장)
 const FONTS = 'hapjang-fonts';
 
 const CORE_FILES = [
@@ -14,8 +14,11 @@ const CORE_FILES = [
   'icons/icon-192.png',
   'icons/icon-512.png',
   'icons/apple-touch-icon.png',
+  'sounds/click.mp3',
   'sounds/moktak.mp3',
   'sounds/bowl.mp3',
+  'images/bead.png',
+  'images/head.png',
 ];
 
 self.addEventListener('install', (e) => {
@@ -25,7 +28,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k.startsWith('hapjang-core-') && k !== CORE).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => (k.startsWith('hapjang-core-') && k !== CORE) || (k.startsWith('hapjang-long') && k !== LONG)).map((k) => caches.delete(k))))
       .then(() => self.clients.claim()),
   );
 });

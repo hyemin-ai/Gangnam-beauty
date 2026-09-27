@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>합장</title>
   <meta name="description" content="휴대폰 하나로 하는 염주·목탁·싱잉볼 기도">
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b0b0b" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#000000">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="합장">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -30,6 +29,7 @@
   <main>
     <!-- 1. 염주 -->
     <section class="view" id="view-beads" data-title="염주">
+      <button class="wish" id="wish" aria-label="소원 적기"><span id="wish-text"></span></button>
       <div class="segmented" id="bead-mode" role="radiogroup" aria-label="구슬 수">
         <button data-n="21" role="radio">21</button>
         <button data-n="108" role="radio">108</button>
@@ -132,6 +132,20 @@
     </form>
   </dialog>
 
+  <!-- 소원 적기 -->
+  <dialog id="wish-dialog">
+    <form method="dialog" id="wish-form">
+      <h2>나의 소원</h2>
+      <p class="note">염주를 돌리는 동안 화면 위에 계속 보입니다.</p>
+      <textarea name="wish" rows="3" maxlength="80" placeholder="예: 가족 모두 건강하기를"></textarea>
+      <div class="actions">
+        <span class="spacer"></span>
+        <button value="cancel" formnovalidate class="text-btn">취소</button>
+        <button value="save" class="primary">저장</button>
+      </div>
+    </form>
+  </dialog>
+
   <!-- 자주 가는 절 지정 -->
   <dialog id="fav-dialog">
     <form method="dialog" id="fav-form">
@@ -150,6 +164,7 @@
     <form method="dialog">
       <h2>설정</h2>
       <label class="check"><input type="checkbox" id="set-sound"> 소리</label>
+      <label class="check"><input type="checkbox" id="set-click"> 염주 넘길 때 딸깍 소리</label>
       <label class="check"><input type="checkbox" id="set-haptic"> 진동</label>
       <h3>기록 백업</h3>
       <p class="note">모든 기록은 이 휴대폰에만 저장됩니다. 휴대폰을 바꾸기 전에 백업하세요.</p>
@@ -161,7 +176,7 @@
       <h3>홈 화면에 설치</h3>
       <p class="note">아이폰: Safari 공유 버튼 → ‘홈 화면에 추가’<br>안드로이드: Chrome 메뉴(⋮) → ‘홈 화면에 추가’ 또는 ‘앱 설치’</p>
       <h3>정보</h3>
-      <p class="note">목탁·싱잉볼 소리는 이 앱에서 직접 합성했습니다. 글꼴: 고운바탕, 송명 (SIL Open Font License).</p>
+      <p class="note">목탁·싱잉볼·염주 소리와 구슬 그림은 이 앱에서 직접 만들었습니다. 글꼴: 고운바탕, 송명 (SIL Open Font License).</p>
       <div class="actions">
         <span class="spacer"></span>
         <button value="close" class="primary">닫기</button>

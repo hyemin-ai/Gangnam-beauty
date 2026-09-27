@@ -1,4 +1,4 @@
-"""앱 아이콘(염주 팔찌 그림) PNG를 만든다. 외부 라이브러리 없이 동작.
+"""앱 아이콘(검정 바탕에 흰 염주 팔찌) PNG를 만든다. 외부 라이브러리 없이 동작.
 
 사용법:  python3 prayer/tools/make_icons.py
 결과물:  prayer/icons/icon-192.png, icon-512.png, apple-touch-icon.png
@@ -40,7 +40,7 @@ def render(size, ss=4):
                         if (filled and d <= r) or (not filled and abs(d - r) <= stroke):
                             ink += 1
                             break
-            v = 255 - round(255 * ink / (ss * ss) * 0.92)
+            v = round(255 * ink / (ss * ss) * 0.92)  # 검정 바탕에 흰 구슬
             row += bytes((v, v, v))
         rows.append(bytes(row))
     raw = b"".join(rows)

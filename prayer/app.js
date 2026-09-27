@@ -3,7 +3,8 @@
 /* ───────── 저장 (이 휴대폰의 localStorage에만 저장) ───────── */
 const KEY = 'hapjang.v1';
 const DEFAULTS = {
-  settings: { sound: true, haptic: true },
+  settings: { sound: true, click: true, haptic: true },
+  wish: '',
   tab: 'beads',
   beads: { mode: 108, 21: { count: 0, rounds: 0 }, 108: { count: 0, rounds: 0 }, days: {} },
   bowl: { interval: 5, wake: false },
@@ -50,8 +51,16 @@ function loadSound(name) {
     .then((buf) => { buffers[name] = buf; })
     .catch(() => { /* 실패하면 아래 Audio 대체 재생 사용 */ });
 }
+loadSound('click');
 loadSound('moktak');
 loadSound('bowl');
+
+// 배터리 절약: 소리가 끝나고 한동안 조용하면 오디오 엔진을 잠재운다
+let idleTimer = null;
+function sleepAudioLater(seconds) {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => { if (ctx && ctx.state === 'running') ctx.suspend().catch(() => {}); }, (seconds + 15) * 1000);
+}
 
 function unlockAudio() {
   if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {});
@@ -69,6 +78,7 @@ function play(name, volume = 1) {
     src.buffer = buf;
     src.connect(gain).connect(ctx.destination);
     src.start();
+    sleepAudioLater(buf.duration);
   } else {
     const a = new Audio(`sounds/${name}.mp3`);
     a.volume = volume;
@@ -128,7 +138,6 @@ document.querySelectorAll('#tabs button').forEach((b) => b.addEventListener('cli
 const ring = $('#mala-ring');
 const SVGNS = 'http://www.w3.org/2000/svg';
 const RADIUS = 132;
-let beadEls = [];
 let spinOffset = 0; // 한 바퀴를 넘길 때 뒤로 감기지 않도록 누적하는 각도
 
 function beadState() { return S.beads[S.beads.mode]; }
@@ -137,24 +146,29 @@ function stepDeg() { return 360 / (S.beads.mode + 1); } // +1은 모주(가장 �
 function buildMala() {
   const n = S.beads.mode;
   const step = (2 * Math.PI) / (n + 1);
-  const r = n === 21 ? 12 : 3.4;
+  const r = n === 21 ? 12.5 : 3.8;
   ring.replaceChildren();
-  beadEls = [];
-  const head = document.createElementNS(SVGNS, 'circle');
-  head.setAttribute('cx', 0);
-  head.setAttribute('cy', -RADIUS);
-  head.setAttribute('r', n === 21 ? 16 : 7);
-  head.classList.add('head');
-  ring.appendChild(head);
+  const cord = document.createElementNS(SVGNS, 'circle');
+  cord.setAttribute('r', RADIUS);
+  cord.setAttribute('class', 'cord');
+  cord.setAttribute('stroke-width', n === 21 ? 1.6 : 0.8);
+  ring.appendChild(cord);
+  // 구슬 이미지는 가운데 80%에 구슬이 있으므로 1.25배 크기로 놓는다.
+  // 나뭇결(구멍 방향)이 줄을 따라가도록 각 구슬을 자기 자리 각도만큼 돌린다.
+  const place = (href, i, radius) => {
+    const img = document.createElementNS(SVGNS, 'image');
+    const size = radius * 2 * 1.25;
+    img.setAttribute('href', href);
+    img.setAttribute('x', -size / 2);
+    img.setAttribute('y', -size / 2);
+    img.setAttribute('width', size);
+    img.setAttribute('height', size);
+    img.setAttribute('transform', `rotate(${(i * step * 180) / Math.PI}) translate(0 ${-RADIUS})`);
+    ring.appendChild(img);
+  };
   // 구슬 i는 모주에서 시계 방향으로 i칸. 링을 돌려 지금 구슬을 맨 위 표시(▼) 아래로 가져온다
-  for (let i = 1; i <= n; i++) {
-    const c = document.createElementNS(SVGNS, 'circle');
-    c.setAttribute('cx', (RADIUS * Math.sin(i * step)).toFixed(2));
-    c.setAttribute('cy', (-RADIUS * Math.cos(i * step)).toFixed(2));
-    c.setAttribute('r', r);
-    ring.appendChild(c);
-    beadEls[i] = c;
-  }
+  for (let i = 1; i <= n; i++) place('images/bead.png', i, r);
+  place('images/head.png', 0, n === 21 ? 16 : 7);
   spinOffset = 0;
   renderBeads(false);
 }
@@ -165,7 +179,6 @@ function renderBeads(animate = true) {
   ring.classList.toggle('no-anim', !animate);
   ring.style.transform = `rotate(${spinOffset - st.count * stepDeg()}deg)`;
   if (!animate) { void ring.getBoundingClientRect(); }
-  beadEls.forEach((el, i) => el && el.classList.toggle('cur', i === st.count));
   $('#bead-count').textContent = st.count;
   $('#bead-sub').textContent = st.count === n ? '한 바퀴 원만' : `${n} 중`;
   const t = S.beads.days[today()] || 0;
@@ -183,6 +196,7 @@ onTap($('#bead-tap'), () => {
     spinOffset -= 360; // 모주를 지나 앞으로 계속 돌도록
   }
   st.count += 1;
+  if (S.settings.click) play('click', 0.55);
   if (st.count === n) {
     st.rounds += 1;
     const d = today();
@@ -228,6 +242,26 @@ document.querySelectorAll('#bead-mode button').forEach((b) => b.addEventListener
   btn.addEventListener('contextmenu', (e) => e.preventDefault());
 })();
 
+/* ───────── 소원 (염주 화면 위에 고정) ───────── */
+const wishDialog = $('#wish-dialog');
+const wishForm = $('#wish-form');
+function renderWish() {
+  const w = (S.wish || '').trim();
+  $('#wish-text').textContent = w || '✎ 눌러서 나의 소원 적기';
+  $('#wish').classList.toggle('empty', !w);
+}
+$('#wish').addEventListener('click', () => {
+  wishForm.elements.wish.value = S.wish || '';
+  wishDialog.returnValue = '';
+  wishDialog.showModal();
+});
+wishDialog.addEventListener('close', () => {
+  if (wishDialog.returnValue !== 'save') return;
+  S.wish = wishForm.elements.wish.value.trim();
+  save();
+  renderWish();
+});
+
 /* ───────── 2. 목탁 ───────── */
 onTap($('#moktak-tap'), () => {
   play('moktak');
@@ -260,7 +294,7 @@ function fmt(sec) {
 }
 function updateCountdown() {
   const el = $('#bowl-countdown');
-  if (!running || !timerAudio) return;
+  if (!running || !timerAudio || document.hidden) return; // 화면이 꺼져 있으면 계산 안 함 (배터리 절약)
   const d = timerAudio.duration;
   el.textContent = isFinite(d) && d > 0 ? `다음 종까지 ${fmt(d - timerAudio.currentTime)}` : '준비 중…';
 }
@@ -302,7 +336,7 @@ function startTimer() {
       navigator.mediaSession.setActionHandler('stop', () => stopTimer());
     } catch (e) { /* 일부 기능 미지원 */ }
   }
-  tick = setInterval(updateCountdown, 500);
+  tick = setInterval(updateCountdown, 1000);
   updateCountdown();
   requestWake();
   renderBowl();
@@ -441,7 +475,7 @@ function openVisit(id) {
   $('#visit-dialog-title').textContent = v ? '방문 기록 수정' : '방문 기록';
   visitForm.elements.name.value = v ? v.name : '';
   visitForm.elements.date.value = v ? v.date : today();
-  visitForm.elements.wish.value = v ? v.wish : '';
+  visitForm.elements.wish.value = v ? v.wish : S.wish;
   $('#visit-delete').hidden = !v;
   visitDialog.returnValue = '';
   visitDialog.showModal();
@@ -474,6 +508,7 @@ const settingsDialog = $('#settings-dialog');
 $('#open-settings').addEventListener('click', () => {
   $('#set-sound').checked = S.settings.sound;
   $('#set-haptic').checked = S.settings.haptic;
+  $('#set-click').checked = S.settings.click;
   settingsDialog.showModal();
 });
 $('#set-sound').addEventListener('change', (e) => {
@@ -482,6 +517,7 @@ $('#set-sound').addEventListener('change', (e) => {
   save();
 });
 $('#set-haptic').addEventListener('change', (e) => { S.settings.haptic = e.target.checked; save(); });
+$('#set-click').addEventListener('change', (e) => { S.settings.click = e.target.checked; save(); });
 
 $('#backup-export').addEventListener('click', () => {
   const blob = new Blob([JSON.stringify({ app: 'hapjang', version: 1, savedAt: new Date().toISOString(), data: S }, null, 2)], { type: 'application/json' });
@@ -511,6 +547,7 @@ $('#backup-file').addEventListener('change', async (e) => {
 
 /* ───────── 시작 ───────── */
 function renderAll() {
+  renderWish();
   buildMala();
   renderBowl();
   renderFavs();
