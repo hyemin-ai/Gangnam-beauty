@@ -1,0 +1,44 @@
+# 만트라 안드로이드 앱(구글 플레이용 .aab)을 GitHub 서버에서 빌드한다.
+# 서명은 하지 않는다(서명 열쇠는 저장소에 올리지 않음). 결과물은 aab-output 브랜치에 저장된다.
+name: Build Android app bundle
+
+on:
+  push:
+    branches: [claude/loving-allen-kofodc]
+    paths: ['android/**', '.github/workflows/build-android.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Build unsigned release bundle
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon bundleRelease
+          ls -la app/build/outputs/bundle/release/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-release-unsigned
+          path: android/app/build/outputs/bundle/release/*.aab
+      - name: Save bundle to aab-output branch
+        run: |
+          mkdir -p /tmp/out && cp android/app/build/outputs/bundle/release/*.aab /tmp/out/app-release-unsigned.aab
+          git config user.name "github-actions[bot]"
+          git config user.email "41898729+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan aab-output
+          git rm -rfq .
+          cp /tmp/out/app-release-unsigned.aab .
+          echo "Built from ${GITHUB_SHA}" > BUILD_INFO.txt
+          git add app-release-unsigned.aab BUILD_INFO.txt
+          git commit -qm "Unsigned app bundle from ${GITHUB_SHA}"
+          git push -f origin aab-output
